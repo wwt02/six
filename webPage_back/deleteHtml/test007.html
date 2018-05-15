@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css3/css/layui.css" media="all">
+
+</head>
+<body>
+
+<table id="demo"  lay-filter="test3"></table>
+
+
+
+<script id="barDemo" type="text/html">
+
+        {{#  if(d.region === "邵阳市"){ }}
+        无数据  <a class="layui-btn layui-btn-mini" data-opt="edit" lay-event="edit">编辑</a>
+        {{#  } }}
+
+        {{#    if(d.region !== "邵阳市"){  }}
+        you <a class="layui-btn layui-btn-danger layui-btn-mini" data-opt="del" lay-event="del">删除</a>
+        {{#  } }}
+
+</script>
+
+
+<div id="view"></div>
+
+<script src="../css3/layui.js"></script>
+<script>
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element','form','laytpl'], function(){
+        var $ = layui.jquery
+            ,laydate = layui.laydate //日期
+            ,laypage = layui.laypage //分页
+            ,layer = layui.layer //弹层
+            ,table = layui.table //表格
+            ,carousel = layui.carousel //轮播
+            ,upload = layui.upload //上传
+            ,element = layui.element //元素操作
+            ,form=layui.form
+            ,laytpl=layui.laytpl;
+
+
+        table.render({
+            elem: '#demo'
+            ,height: 315
+            ,url:'../json/region.json' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {checkbox:true, fixed: true}
+                ,{field:'id', title:'ID', width:80, sort: true}
+                ,{field:'region', title:'地区', width:80}
+                ,{fixed: 'right', title:'操作', width:160, align:'center', toolbar: '#barDemo'}
+
+            ]]
+        });
+
+/**
+ var data = { //数据
+            "title":"Layui常用模块"
+            ,"list":[
+            {"modname":"弹层","alias":"layer","site":"layer.layui.com"}
+            ,{"modname":"表单","alias":"form","site":"layer.layui.com001"}
+            ,{"modname":"表单002","alias":"form002","site":"layer.layui.com002"}
+            ]
+        };
+
+ var getTpl = barDemo.innerHTML
+ ,view = document.getElementById('view');
+
+ laytpl(getTpl).render(data, function(html){
+            view.innerHTML = html;
+        });
+ * */
+
+
+    });
+
+
+
+
+</script>
+
+
+</body>
+</html>

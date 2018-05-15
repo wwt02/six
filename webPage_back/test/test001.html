@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>table模块快速使用</title>
+  <link rel="stylesheet" href="../css/layui.css" media="all">
+</head>
+<body>
+ 
+<table id="demo" lay-filter="test"></table>
+ 
+<script src="../layui.js"></script>
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+
+  //第一个实例
+  table.render({
+    elem: '#demo'
+    ,height: 315
+    ,url: '../html02/resultTable.json' //数据接口
+    ,page: true //开启分页
+    ,cols: [[ //表头
+      {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+      ,{field: 'title', title: '标题', width:80}
+      ,{field: 'field_id', title: '领域', width:80}
+      ,{field: 'region_id', title: '区域', width:80} 
+      ,{field: 'user_id', title: '发表用户', width: 100}
+      ,{field: 'status', title: '审核状态', width: 100}
+      ,{field: 'visit_count', title: '访问次数', width: 100, sort: true}
+    ]]
+  });
+  
+});
+</script>
+</body>
+</html>

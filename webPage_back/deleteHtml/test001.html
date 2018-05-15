@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../css/layui.css"  media="all">
+
+    <script src="../js/jquery-1.11.0.min.js" ></script>
+    <script>
+        $(function(){
+
+            var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+            var pp = JSON.parse(hh);//将字符串抓换成对象
+
+
+       ///  alert(pp.money);
+
+
+        });
+
+
+    </script>
+</head>
+<body>
+<textarea name="test" required lay-verify="required" placeholder="请输入" class="layui-textarea"></textarea>
+
+
+<br/><br/>
+
+<textarea class="layui-textarea layui-hide" style="display: none;" placeholder="22222" name="content"  id="LAY_demo_editor">
+12121312313333
+</textarea>
+
+<br/><br/>
+
+<textarea cols="30" rows="5" name="text">
+
+
+</textarea>
+<br/><br/>
+
+
+<input type="button" id="btn" value="button" />
+
+<script src="../layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,$ =layui.jquery;
+
+
+
+        //创建一个编辑器
+       var editIndex = layedit.build('LAY_demo_editor');
+
+
+   /*     layedit.set({
+            uploadImage: {
+                url: '/topic/upload.html' //接口url
+                ,type: 'post' //默认post
+            }
+        });
+       var index = layedit.build('LAY_demo_editor',{tool: ['strong', 'italic','underline','del','|','left','center','right','|','link','unlink','face','image','|','code']}); //建立编辑器
+*/
+
+
+     ///   $("[name='pvalue']").val("333333333333333333");
+
+        $("#btn").click(function(){
+        ////    var oEdit=document.getElementById("LAY_demo_editor");
+     ///       oEdit.value="22666";
+          ////  alert(editIndex+"  111");
+        ///    var str="<pre><span>111111222333444445555566666</span></pre>";
+      ///     alert($('[name="content"]').val());
+         ///   var str=layedit.getContent(editIndex)
+         ///   layedit.setContent("66666")
+            alert(1);
+         //   var str = "<b><i>hello Word</i></b>";
+            $("#LAY_demo_editor").val('111112226666');
+            layedit.build('LAY_demo_editor');
+
+        //  var str=   layedit.getText(editIndex)
+          //     str=str+""+"666";
+            ///     layedit.setText(editIndex,"12121299999");
+         ///  alert(str);
+         ///   $('[name="test"]').val("33");
+
+        ///    body.find('[name="content"]').val(str);
+        ///    editIndex.val(str);
+
+         /// $("[name='text']").val("111111222333444445555566666");
+
+        });
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../css/layui.css"  media="all">
+    <link rel="stylesheet" href="../css/globle.css" media="all" />
+
+</head>
+<body>
+
+
+<form class="layui-form">
+
+    <div class="layui-form-item">
+
+    <div class="layui-inline">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+
+
+
+            <select name="regionId">
+                <option value="1">西湖区</option>
+                <option value="2">余杭区</option>
+                <option value="3">临安市</option>
+            </select>
+
+            <!--
+            <input id="sex" name="sex" value="0" title="男"  type="radio" />
+            <input name="sex" value="1" title="女" type="radio" />
+
+            -->
+
+
+
+
+        </div>
+    </div>
+
+    </div>
+
+</form>
+
+<br/><br/>
+
+<input type="button" value="button" id="btn" />
+
+<script src="../layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form
+            ,$ = layui.jquery;
+
+        //layui-unselect layui-form-radio
+     ///   $("[name='sex']").val(3);
+
+        var res={"sex":1};
+        $('[name="sex"]').each(function(i,item){
+            if($(item).val()==res.sex){
+                $(item).prop('checked',true);
+                layui.use('form',function(){
+                    ///   form = layui.form();
+                 ///   form = layui.form;
+                    form.render();
+                       });
+                }
+            });
+        ///    $(".layui-form-item .layui-inline .layui-input-block .layui-form-radio").attr("checked",true);
+
+        $("#btn").click(function(){
+
+
+          ///  var value=$("input[name='sex']:checked").val();
+          ///  var value=  $("input[name='regionId']").val();
+           /// var value=  $("[name='regionId']").find("option:selected").text();
+            var value=  $("[name='regionId']").find("option:selected").val();
+
+
+                 layer.msg(value);
+
+
+        });
+
+  });
+</script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+

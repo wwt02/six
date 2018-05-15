@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css3/css/layui.css"  media="all">
+
+</head>
+<body>
+<fieldset class="layui-elem-field site-demo-button">
+    <legend>发布状态</legend>
+    <div class="layui-form-item">
+
+
+        <div class="layui-inline" id="div2">
+            <button id="obtn2" class="layui-btn layui-btn-warm layui-btn-radius"   style=" width:130px; ">审核未通过</button>
+        </div>
+
+
+
+        <div class="layui-inline" id="div3">
+            <button id="obtn3" class="layui-btn layui-btn-warm layui-btn-radius"   style=" width:130px; ">审核通过</button>
+        </div>
+
+
+    </div>
+
+</fieldset>
+<table id="demo"  lay-filter="test3"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-mini" data-opt="edit" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-mini" data-opt="del" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-normal layui-btn-mini"   class="top" data-opt="movetop" lay-event="movetop">置顶</a>
+    <a class="layui-btn layui-btn-mini" data-opt="up" lay-event="up">上移</a>
+
+</script>
+
+
+
+
+<script src="../css3/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
+        var laydate = layui.laydate //日期
+            ,laypage = layui.laypage //分页
+            , layer = layui.layer //弹层
+            ,table = layui.table //表格
+            ,carousel = layui.carousel //轮播
+            ,upload = layui.upload //上传
+            ,element = layui.element
+            , $ = layui.jquery; //元素操作
+
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 315
+            ,url:"../json/region.json" //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {checkbox:true, fixed: true}
+                ,{field:'id', title:'ID', width:80, sort: true}
+                ,{field:'region', title:'地区', width:80}
+                ,{fixed: 'right', title:'操作', width:200, align:'center', toolbar: '#barDemo'}
+
+            ]]
+
+        });
+
+
+
+        //监听工具条
+        table.on('tool(test3)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+
+        });
+
+
+
+
+        var exam="";
+        $("#obtn2").click(function(){
+            layer.msg("obtn2");
+
+
+          /*  table.on('checkbox(test3)', function(obj){
+
+                if(obj.checked){
+                    console.log(obj.checked); //当前是否选中状态
+                    console.log(obj.data); //选中行的相关数据
+                    console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+                    layer.msg(typeof  (obj.checked));
+                }
+
+            });*/
+        });
+
+
+        $("#obtn3").click(function(){
+            layer.msg("obtn3");
+
+
+            var checkStatus = table.checkStatus('demo'); //test即为基础参数id对应的值
+
+            console.log(checkStatus.data) //获取选中行的数据
+            console.log(checkStatus.data.length) //获取选中行数量，可作为是否有选中行的条件
+         ///   console.log(checkStatus.isAll ) //表格是否全选
+        for (var i=0;i<checkStatus.data.length;i++){
+            alert(checkStatus.data[i].id);
+        }
+
+        });
+
+    });
+</script>
+</body>
+</html>

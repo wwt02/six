@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../css/layui.css?t=1507831962977" media="all">
+
+</head>
+<body>
+
+
+
+    <table id="demo"  lay-filter="test3"></table>
+
+    <br/>
+    <br/>
+    <button id="btntb">遍历table</button>
+
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-mini" data-opt="edit" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-mini" data-opt="del" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-normal layui-btn-mini"   class="top" data-opt="movetop" lay-event="movetop">置顶</a>
+        <a class="layui-btn layui-btn-mini" data-opt="up" lay-event="up">上移</a>
+
+    </script>
+
+
+
+
+
+<script src="../layui.js?t=1507831962977"></script>
+<script>
+        layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
+            var laydate = layui.laydate //日期
+                ,laypage = layui.laypage //分页
+                , layer = layui.layer //弹层
+                ,table = layui.table //表格
+                ,carousel = layui.carousel //轮播
+                ,upload = layui.upload //上传
+                ,element = layui.element
+                , $ = layui.jquery; //元素操作
+
+
+            //第一个实例
+            table.render({
+                elem: '#demo'
+                ,height: 315
+                ,url:"../json/region.json" //数据接口
+                ,page: true //开启分页
+                ,cols: [[ //表头
+                    {checkbox:true, fixed: true}
+                    ,{field:'id', title:'ID', width:80, sort: true}
+                    ,{field:'region', title:'地区', width:80}
+                    ,{fixed: 'right', title:'操作', width:200, align:'center', toolbar: '#barDemo'}
+
+                ]]
+                ,done : function(res, curr, count){
+
+                }
+            });
+
+
+
+            //监听工具条
+            table.on('tool(test3)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data //获得当前行数据
+                    ,layEvent = obj.event; //获得 lay-event 对应的值
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+
+
+                if(layEvent === 'movetop'){
+/*
+                    obj.fadeOut().fadeIn();
+                    $("#demo tbody").prepend(obj);
+                    obj.css("color","#f60");
+*/
+                }
+               else if(layEvent === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        layer.msg(typeof  (obj.nextSibling));
+                   ///     obj.del(); //删除对应行（tr）的DOM结构
+                   ///   layer.msg(JSON.stringify(data));
+                   ///     layer.close(index);
+                   ///    layer.msg(index);
+
+                    });
+                }
+                else if(layEvent === 'up'){
+                  ///  layer.msg("up");
+
+          ///  layer.msg(typeof tr);
+                layer.msg(tr.data);
+                  ///  var $up = $(".up")
+                   /* $up.click(function() {
+                        layer.msg("up2");
+
+                        var $tr = $(this).parents("tr");
+                        if ($tr.index() != 0) {
+                            $tr.fadeOut().fadeIn();
+                            $tr.prev().before($tr);
+                        }
+                    });*/
+
+                }
+
+
+
+
+            });
+
+
+        });
+</script>
+
+
+
+</body>
+</html>

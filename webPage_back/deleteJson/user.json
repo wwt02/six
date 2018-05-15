@@ -1,0 +1,32 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 3,
+    "data": [{
+            "id" :1,
+            "name": "cc001",
+            "email": "15@qq.com",
+            "tel": "13923796849",
+            "role": "普通用户",
+            "status": "未认证"
+
+        },
+        {
+              "id" :2,
+            "name": "cc002",
+            "email": "16@qq.com",
+            "tel": "13988886849",
+            "role": "管理员",
+            "status": "认证"
+        },
+        {
+            "id" :3,
+            "name": "cc003",
+            "email": "18@qq.com",
+            "tel": "13966666849",
+            "role": "普通用户",
+            "status": "认证"
+        }
+        
+    ]
+}
