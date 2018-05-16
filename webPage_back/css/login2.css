@@ -236,4 +236,6 @@ a.zcxy {text-decoration: underline;line-height:58px;margin-left:15px;color: #959
 .web_login .login_form {margin-top:30px;}
 .web_login .uinArea {
 height: 60px;}
-.header .switch{left:70px;}
+.header .switch{
+	left: 50%;
+	margin-left: -34px;}

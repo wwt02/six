@@ -4,12 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>后台管理主页</title>
-  <link rel="stylesheet" href="../plugins/layui/css/layui.css">
-  <link rel="stylesheet" href="../build/css/app.css" media="all" />
-    <link rel="stylesheet" href="../css/admin.css" media="all" />
+  <link rel="stylesheet" href="./plugins/layui/css/layui.css">
+  <link rel="stylesheet" href="./build/css/app.css" media="all" />
+    <link rel="stylesheet" href="./css/admin.css" media="all" />
 
    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
-
 
 
 </head>
@@ -36,8 +35,10 @@
         </a>
 
         <dl class="layui-nav-child">
-                    <dd><a href="编辑用户.html">修改个人资料</a></dd>
-                    <dd><a href="login.html">退了</a></dd>
+            <!--
+                    <dd><a href="">修改个人资料</a></dd>
+            -->
+                    <dd><a href="">退了</a></dd>
                   
        </dl>
        
@@ -55,13 +56,13 @@
       
       
         <li class="layui-nav-item ">
-        <a href="javascript:;"  kit-target data-options="{url:'后台首页.html'
+        <a href="javascript:;"  kit-target data-options="{url:'./html/后台首页.html'
         ,title:'后台首页',id:'1'}">
         <i class="fa fa-plug"></i>
         <span>后台首页</span></a></li>
 
         <li class="layui-nav-item layui-nav-itemed">
-        <a href="javascript:;"kit-target  data-options="{url:'成果发布.html',
+        <a href="javascript:;"kit-target  data-options="{url:'./html/成果发布.html',
         title:'成果发布',id:'2'}">
         <i class="fa fa-book"></i>
         <span>成果发布</span></a></li>
@@ -76,49 +77,49 @@
 -->
         
         <li class="layui-nav-item layui-nav-itemed">
-        <a href="javascript:;"  kit-target data-options="{url:'轮播图模块.html',
+        <a href="javascript:;"  kit-target data-options="{url:'./html/轮播图模块.html',
         title:'轮播图模块',id:'4'}">
         <i class="fa fa-home"></i>
         <span>轮播图模块</span></a></li>
        
         <li class="layui-nav-item layui-nav-itemed">
-        <a href="javascript:;"  kit-target data-options="{url:'专家信息.html',
+        <a href="javascript:;"  kit-target data-options="{url:'./html/专家信息.html',
         title:'专家信息',id:'5'}">
         <i class="fa fa-cog"></i>
         <span>专家信息</span></a></li>
 
         <li class="layui-nav-item layui-nav-itemed">
-        <a href="javascript:;"  kit-target data-options="{url:'领域管理.html',
+        <a href="javascript:;"  kit-target data-options="{url:'./html/领域管理.html',
         title:'领域管理',id:'6'}">
         <i class="fa fa-check-square"></i>
         <span>领域管理</span></a></li>
        
         <li class="layui-nav-item layui-nav-itemed">
-        <a href="javascript:;"  kit-target data-options="{url:'友情链接.html',
+        <a href="javascript:;"  kit-target data-options="{url:'./html/友情链接.html',
         title:'友情链接',id:'7'}">
         <i class="fa fa-spinner"></i></i>
         <span>友情链接</span></a></li>
        
         <li class="layui-nav-item layui-nav-itemed">
-        <a href="javascript:;"  kit-target data-options="{url:'行业咨询.html',
+        <a href="javascript:;"  kit-target data-options="{url:'./html/行业咨询.html',
         title:'行业咨询',id:'8'}">
         <i class="fa fa-square"></i></i>
         <span>行业咨询</span></a></li>
         
         <li class="layui-nav-item layui-nav-itemed">
-        <a href="javascript:;"  kit-target data-options="{url:'地区信息.html',
+        <a href="javascript:;"  kit-target data-options="{url:'./html/地区信息.html',
         title:'地区信息',id:'9'}">
         <i class="fa fa-user" aria-hidden="true"></i>
         <span>地区信息</span></a></li>
 	    
         <li class="layui-nav-item layui-nav-itemed">
-        <a href="javascript:;"  kit-target data-options="{url:'需求管理.html',
+        <a href="javascript:;"  kit-target data-options="{url:'./html/需求管理.html',
         title:'需求管理',id:'10'}">
         <i class="fa fa-camera-retro"></i>
         <span>需求管理</span></a></li>
 
        <li class="layui-nav-item layui-nav-itemed">
-       <a href="javascript:;" kit-target data-options="{url:'用户管理.html',
+       <a href="javascript:;" kit-target data-options="{url:'./html/用户管理.html',
        title:'用户管理',id:'11'}">
        <i class="fa fa-circle-o-notch"></i>
        <span>用户管理</span>
@@ -147,11 +148,11 @@
     © xxxxxxx.com - 环保成果转换平台
   </div>
 </div>
-<script src="../plugins/layui/layui.js"></script>
+<script src="./plugins/layui/layui.js"></script>
 <script>
         var message;
         layui.config({
-            base: '../build/js/',
+            base: './build/js/',
             version: '1.0.1'
         }).use(['app','element','form','table',
 		'layer','util','carousel'], function() {

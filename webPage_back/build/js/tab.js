@@ -20,7 +20,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
     var Tab = function() {
         this.config = {
             elem: undefined,
-            mainUrl: 'main.html',
+            mainUrl: 'html/后台首页.html',
             renderType: 'iframe',
             openWait: true
         };
