@@ -289,42 +289,55 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
   
 
-  //分页
-  laypage.render({
-    elem: 'pageDemo' //分页容器的id
-    ,count: 100 //总页数
-    ,skin: '#1E9FFF' //自定义选中色值
-    //,skip: true //开启跳页
-    ,jump: function(obj, first){
-      if(!first){
-        layer.msg('第'+ obj.curr +'页');
-      }
-    }
-  });
 
 
-
-    sessionStorage.setItem("obtn1", "false");
-    sessionStorage.setItem("obtn2", "false");
-    sessionStorage.setItem("obtn3", "false");
+    sessionStorage.setItem("obtn11", "false");
+    sessionStorage.setItem("obtn22", "false");
+    sessionStorage.setItem("obtn33", "false");
 
     $("#obtn1").click(function(){
 
-        var obtn1= sessionStorage.getItem("obtn1");
-        if(obtn1=="false"){
-            sessionStorage.setItem("obtn1", "true");
-            sessionStorage.setItem("obtn2", "false");
-            sessionStorage.setItem("obtn3", "false");
+    ///    layer.msg("#obtn1");
+        var obtn11= sessionStorage.getItem("obtn11");
+
+        if(obtn11=="false"){
+            sessionStorage.setItem("obtn11", "true");
+            sessionStorage.setItem("obtn22", "false");
+            sessionStorage.setItem("obtn33", "false");
         }
         else{
-            sessionStorage.setItem("btn1", "false");
+            sessionStorage.setItem("obtn11", "false");
         }
 
-        obtn1= sessionStorage.getItem("obtn1");
+
+        obtn11= sessionStorage.getItem("obtn11");
+        if(obtn11=="true"){
+            $("#obtn1").removeClass("layui-btn-normal");
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").addClass("layui-btn-danger");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-normal");
+            $("#obtn2").addClass("layui-btn-normal");
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-normal");
+            $("#obtn3").addClass("layui-btn-normal");
+
+        }
+        else{
+            $("#btn1").removeClass("layui-btn-normal");
+            $("#btn1").removeClass("layui-btn-danger");
+            $("#btn1").addClass("layui-btn-normal");
+
+        }
+
+
+        obtn11= sessionStorage.getItem("obtn11");
 
         var rlist="http://101.200.43.10:8080/rule";
 
-        if(obtn1=="true"){
+        if(obtn11=="true"){
             rlist += "?type=1"
         }
 
@@ -339,23 +352,50 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     $("#obtn2").click(function(){
 
-        var obtn1= sessionStorage.getItem("obtn2");
-        if(obtn1=="false"){
-            sessionStorage.setItem("obtn1", "false");
-            sessionStorage.setItem("obtn2", "true");
-            sessionStorage.setItem("obtn3", "false");
+
+        var obtn22= sessionStorage.getItem("obtn22");
+
+        if(obtn22=="false"){
+            sessionStorage.setItem("obtn11", "false");
+            sessionStorage.setItem("obtn22", "true");
+            sessionStorage.setItem("obtn33", "false");
         }
         else{
-            sessionStorage.setItem("obtn2", "false");
+            sessionStorage.setItem("obtn22", "false");
         }
 
-        obtn1= sessionStorage.getItem("obtn1");
+        obtn22= sessionStorage.getItem("obtn22");
+
+        if(obtn22=="true"){
+            $("#obtn1").removeClass("layui-btn-normal");
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").addClass("layui-btn-normal");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-normal");
+            $("#obtn2").addClass("layui-btn-danger");
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-normal");
+            $("#obtn3").addClass("layui-btn-normal");
+
+        }
+        else{
+            $("#obtn2").removeClass("layui-btn-normal");
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").addClass("layui-btn-normal");
+
+        }
 
 
-        var rlist="http://101.200.43.10:8080/rule?type=";
 
-        sessionStorage.setItem("type", "2");
-        rlist += "2";
+        obtn22= sessionStorage.getItem("obtn22");
+
+        var rlist="http://101.200.43.10:8080/rule";
+
+        if(obtn22=="true"){
+            rlist += "?type=2"
+        }
 
 
         table.reload('demo', {
@@ -367,11 +407,51 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     });
 
     $("#obtn3").click(function(){
-        var rlist="http://101.200.43.10:8080/rule?type=";
+
+        var obtn33= sessionStorage.getItem("obtn33");
+
+        if(obtn33=="false"){
+            sessionStorage.setItem("obtn11", "false");
+            sessionStorage.setItem("obtn22", "false");
+            sessionStorage.setItem("obtn33", "true");
+        }
+        else{
+            sessionStorage.setItem("obtn33", "false");
+        }
+
+        obtn33= sessionStorage.getItem("obtn33");
+
+        if(obtn33=="true"){
+            $("#obtn1").removeClass("layui-btn-normal");
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").addClass("layui-btn-normal");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-normal");
+            $("#obtn2").addClass("layui-btn-normal");
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-normal");
+            $("#obtn3").addClass("layui-btn-danger");
+
+        }
+        else{
+            $("#obtn3").removeClass("layui-btn-normal");
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").addClass("layui-btn-normal");
+
+        }
 
 
-        sessionStorage.setItem("type", "3");
-        rlist += "3";
+
+
+        var rlist="http://101.200.43.10:8080/rule";
+        obtn33= sessionStorage.getItem("obtn33");
+
+        if(obtn33=="true"){
+            rlist += "?type=3"
+        }
+
 
 
         table.reload('demo', {
@@ -379,6 +459,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             ,where: {} //设定异步数据接口的额外参数
             //,height: 300
         });
+
 
     });
 

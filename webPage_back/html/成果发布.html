@@ -537,6 +537,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         else{
             sessionStorage.setItem("btn1", "false");
         }
+
         btn1 =  sessionStorage.getItem("btn1");
 
         if(btn1=="true"){
@@ -555,18 +556,30 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
         }
 
+        btn1 =  sessionStorage.getItem("btn1");
 
-     /*
-       var rlist="http://101.200.43.10:8080/achievement";
-        var role= sessionStorage.getItem("role");
-        var status= sessionStorage.getItem("status");
-        if(status=="-1"){
-            layer.msg("请选择发布转态");
-            return;
+        var rlist="http://101.200.43.10:8080/achievement";
+
+        if(btn1=="true"){
+            rlist += "?role=1"
+
         }
 
-        sessionStorage.setItem("role", "1");
-        rlist +="?role="+"1"+"&status="+status;
+        var status1= sessionStorage.getItem("status1");
+        var status2= sessionStorage.getItem("status2");
+        var status3= sessionStorage.getItem("status3");
+
+
+        if(status1=="true"){
+            rlist += "&status=1";
+        }
+        else if(status2=="true"){
+            rlist += "&status=2";
+        }
+        else if(status3=="true"){
+            rlist += "&status=3";
+        }
+
 
 
         table.reload('demo', {
@@ -574,7 +587,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             ,where: {} //设定异步数据接口的额外参数
             //,height: 300
         });
-*/
+
 
     });
 
@@ -605,47 +618,63 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             $("#btn2").addClass("layui-btn-normal");
         }
 
-/*
-        var rlist="http://101.200.43.10:8080/achievement";
-        var role= sessionStorage.getItem("role");
-        var status= sessionStorage.getItem("status");
-        if(status=="-1"){
-            layer.msg("请选择发布转态");
-            return;
-        }
-        sessionStorage.setItem("role", "0");
-        rlist +="?role="+"0"+"&status="+status;
 
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-            //,height: 300
-        });
-*/
+        btn2 =  sessionStorage.getItem("btn2");
+
+        var rlist="http://101.200.43.10:8080/achievement";
+
+        if(btn2=="true"){
+            rlist += "?role=0"
+
+        }
+
+        var status1= sessionStorage.getItem("status1");
+        var status2= sessionStorage.getItem("status2");
+        var status3= sessionStorage.getItem("status3");
+
+
+        if(status1=="true"){
+            rlist += "&status=1";
+        }
+        else if(status2=="true"){
+            rlist += "&status=2";
+        }
+        else if(status3=="true"){
+            rlist += "&status=3";
+        }
+
+                table.reload('demo', {
+                    url: rlist
+                    ,where: {} //设定异步数据接口的额外参数
+                    //,height: 300
+                });
+
     });
 
 
 
-    sessionStorage.setItem("obtn2", "false");
-    sessionStorage.setItem("obtn3", "false");
-    sessionStorage.setItem("obtn4", "false");
+    sessionStorage.setItem("status1", "false");
+    sessionStorage.setItem("status2", "false");
+    sessionStorage.setItem("status3", "false");
 
 
     $("#obtn2").click(function(){
 
-        var obtn2=sessionStorage.getItem("obtn2");
-        if(obtn2=="false"){
-            sessionStorage.setItem("obtn2", "true");
-            sessionStorage.setItem("obtn3", "false");
-            sessionStorage.setItem("obtn4", "false");
+        var status1=sessionStorage.getItem("status1");
+
+        if(status1=="false"){
+            sessionStorage.setItem("status1", "true");
+            sessionStorage.setItem("status2", "false");
+            sessionStorage.setItem("status3", "false");
 
         }
         else{
-            sessionStorage.setItem("btn2", "false");
+            sessionStorage.setItem("status1", "false");
         }
 
-        obtn2=sessionStorage.getItem("obtn2");
-        if(obtn2 =="true"){
+        status1=sessionStorage.getItem("status1");
+
+        if(status1 =="true"){
 
             $("#obtn2").removeClass("layui-btn-danger");
             $("#obtn2").removeClass("layui-btn-warm");
@@ -666,25 +695,31 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
         }
 
-        /*
         var rlist="http://101.200.43.10:8080/achievement";
-        var role= sessionStorage.getItem("role");
-        var status= sessionStorage.getItem("status");
 
-        sessionStorage.setItem("status", "2");
-        if(role=="-1"){
-            rlist +="?status="+"2";
+        status1=sessionStorage.getItem("status1");
+        if(status1=="true"){
+            rlist +="?status=2";
+
         }
-        else{
-            rlist +="?role="+role+"&status="+"2";
+
+        var btn1= sessionStorage.getItem("btn1");
+        var btn2= sessionStorage.getItem("btn2");
+        if(btn1=="true"){
+            rlist +="&role=1";
         }
+
+        else if(btn2=="true"){
+            rlist +="&role=0";
+        }
+
 
         table.reload('demo', {
             url: rlist
             ,where: {} //设定异步数据接口的额外参数
             //,height: 300
         });
-*/
+
 
 
 
@@ -692,19 +727,20 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     $("#obtn3").click(function(){
 
-        var obtn3=sessionStorage.getItem("obtn3");
-        if(obtn3=="false"){
-            sessionStorage.setItem("obtn2", "false");
-            sessionStorage.setItem("obtn3", "true");
-            sessionStorage.setItem("obtn4", "false");
+
+        var status2=sessionStorage.getItem("status2");
+        if(status2=="false"){
+            sessionStorage.setItem("status1", "false");
+            sessionStorage.setItem("status2", "true");
+            sessionStorage.setItem("status3", "false");
 
         }
         else{
-            sessionStorage.setItem("btn2", "false");
+            sessionStorage.setItem("status2", "false");
         }
 
-        obtn3=sessionStorage.getItem("obtn3");
-        if(obtn3 =="true"){
+        status2=sessionStorage.getItem("status2");
+        if(status2 =="true"){
 
             $("#obtn2").removeClass("layui-btn-danger");
             $("#obtn2").removeClass("layui-btn-warm");
@@ -726,44 +762,58 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         }
 
 
-        /*
-        var rlist="http://101.200.43.10:8080/achievement";
-        var role= sessionStorage.getItem("role");
-        var status= sessionStorage.getItem("status");
 
-        sessionStorage.setItem("status", "3");
-        if(role=="-1"){
-            rlist +="?status="+"3";
+        var rlist="http://101.200.43.10:8080/achievement";
+
+        status2=sessionStorage.getItem("status2");
+        if(status2=="true"){
+            rlist +="?status=3";
+
         }
-        else{
-            rlist +="?role="+role+"&status="+"3";
+
+        var btn1= sessionStorage.getItem("btn1");
+        var btn2= sessionStorage.getItem("btn2");
+        if(btn1=="true"){
+            rlist +="&role=1";
         }
+
+        else if(btn2=="true"){
+            rlist +="&role=0";
+        }
+
+
 
         table.reload('demo', {
             url: rlist
             ,where: {} //设定异步数据接口的额外参数
             //,height: 300
         });
-        */
+
 
     });
 
 
     $("#obtn4").click(function(){
 
-        var obtn4=sessionStorage.getItem("obtn4");
-        if(obtn4=="false"){
-            sessionStorage.setItem("obtn2", "false");
-            sessionStorage.setItem("obtn3", "false");
-            sessionStorage.setItem("obtn4", "true");
+        /*
+           sessionStorage.setItem("status1", "true");
+        sessionStorage.setItem("status2", "false");
+        sessionStorage.setItem("status3", "false");
+        **/
+
+        var status3=sessionStorage.getItem("status3");
+        if(status3=="false"){
+            sessionStorage.setItem("status1", "false");
+            sessionStorage.setItem("status2", "false");
+            sessionStorage.setItem("status3", "true");
 
         }
         else{
-            sessionStorage.setItem("obtn4", "false");
+            sessionStorage.setItem("status3", "false");
         }
 
-        obtn4=sessionStorage.getItem("obtn4");
-        if(obtn4 =="true"){
+        status3=sessionStorage.getItem("status3");
+        if(status3 =="true"){
 
             $("#obtn2").removeClass("layui-btn-danger");
             $("#obtn2").removeClass("layui-btn-warm");
@@ -785,25 +835,33 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         }
 
 
-        /*
-        var rlist="http://101.200.43.10:8080/achievement";
-        var role= sessionStorage.getItem("role");
-        var status= sessionStorage.getItem("status");
 
-        sessionStorage.setItem("status", "1");
-        if(role=="-1"){
-            rlist +="?status="+"1";
+        var rlist="http://101.200.43.10:8080/achievement";
+
+        status3=sessionStorage.getItem("status3");
+        if(status3=="true"){
+            rlist +="?status=1";
+
         }
-        else{
-            rlist +="?role="+role+"&status="+"1";
+
+        var btn1= sessionStorage.getItem("btn1");
+       var  btn2= sessionStorage.getItem("btn2");
+        if(btn1=="true"){
+            rlist +="&role=1";
         }
+
+        else if(btn2=="true"){
+            rlist +="&role=0";
+        }
+
+
 
         table.reload('demo', {
             url: rlist
             ,where: {} //设定异步数据接口的额外参数
             //,height: 300
         });
-*/
+
     });
 
 });
