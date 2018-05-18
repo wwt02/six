@@ -39,12 +39,24 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
   ,table = layui.table //表格
   ,carousel = layui.carousel //轮播
   ,upload = layui.upload //上传
-  ,element = layui.element; //元素操作
+  ,element = layui.element
+  , $ = layui.jquery; //元素操作
   
   //向世界问个好
-  layer.msg('后 台 首 页');
-  
-  //监听Tab切换
+ /// layer.msg('后 台 首 页');
+
+    var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+  // alert( hh);
+
+  if(!hh){
+
+        layer.msg("allJson shou  null");
+     /// window.location.href="../login.html";
+    }
+
+
+
+    //监听Tab切换
   element.on('tab(demo)', function(data){
     layer.msg('切换了：'+ this.innerHTML);
     console.log(data);

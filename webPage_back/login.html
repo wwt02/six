@@ -77,6 +77,8 @@
             ,$ = layui.jquery; //元素操作
 
 
+        sessionStorage.setItem("allJson", "null");
+
 
         var jsonData={};
 
@@ -87,9 +89,17 @@
 
 
          ///   alert(name + "," + password);
-            var flag=true;
 
-            $.ajax({
+         ///   var zhi=sessionStorage.getItem("allJson");
+        /*    if(zhi=="null"){
+                alert("kong");
+            }
+*/
+           /// alert(zhi);
+
+           var flag=true;
+
+           $.ajax({
                 type:"POST",
                 url:"http://101.200.43.10:8080/user/login?name="+name+"&password="+password,
                 processData: false,
@@ -114,7 +124,8 @@
                 return;
 
 
-            localStorage.setItem("allJson", JSON.stringify(jsonData));
+
+            sessionStorage.setItem("allJson", JSON.stringify(jsonData));
            /// layer.msg(JSON.stringify(jsonData));
            /// layer.msg(jsonData.headPic);
               window.location.href="admin.html";

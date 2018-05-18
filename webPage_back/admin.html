@@ -30,13 +30,14 @@
                 
       <li class="layui-nav-item">
         <a href="javascript:;">
-          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          Admin
+          <img id="img" src="" class="layui-nav-img">
+
+
         </a>
 
         <dl class="layui-nav-child">
             <!--
-                    <dd><a href="">修改个人资料</a></dd>
+               <dd><a href="">修改个人资料</a></dd>
             href="login.html"
             -->
             <dd><a id="login">退了</a></dd>
@@ -184,11 +185,21 @@
                 type: 'iframe'
             }).init();
 
-            var hh = localStorage.getItem("allJson");//获取键为allJson的字符串
+
+            var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+            if(!hh){
+                layer.msg("allJson   null");
+                window.location.href="login.html";
+            }
+
             var pp = JSON.parse(hh);//将字符串抓换成对象
-      ///      var strs=pp.headPic.split(",");
-     ///   var s=strs[0].substring(7,strs[0].length-1);
-     ///   alert(s);
+           /// layer.msg(JSON.stringify(pp));
+        ///        layer.msg(pp.headPic);
+           var strs=pp.headPic.split(",");
+       var s=strs[0].substring(7,strs[0].length-1);
+        $("#img").attr("src",s);
+
+       ///    layer.alert(s);
 
             $("#login").click(function(){
 

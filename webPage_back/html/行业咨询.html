@@ -44,7 +44,7 @@
    
     
  <div class="layui-inline">
-    <a href="增加咨询.html"> <button id="addBtn" class="layui-btn layui-btn-danger layui-btn-radius"   style=" width:130px;">增加咨询</button></a>
+    <a href="增加咨询.html"> <button id="addBtn" class="layui-btn layui-btn-normal layui-btn-radius"   style=" width:130px;">增加咨询</button></a>
 </div>
 	 
 
@@ -286,35 +286,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
   });
   
-  //执行一个轮播实例
-  carousel.render({
-    elem: '#test1'
-    ,width: '100%' //设置容器宽度
-    ,height: 200
-    ,arrow: 'none' //不显示箭头
-    ,anim: 'fade' //切换动画方式
-  });
+
   
-  //将日期直接嵌套在指定容器中
-  var dateIns = laydate.render({
-    elem: '#laydateDemo'
-    ,position: 'static'
-    ,calendar: true //是否开启公历重要节日
-    ,mark: { //标记重要日子
-      '0-10-14': '生日'
-      ,'2017-10-26': ''
-      ,'2017-10-27': ''
-    } 
-    ,done: function(value, date, endDate){
-      if(date.year == 2017 && date.month == 10 && date.date == 27){
-        dateIns.hint('明天不上班');
-      }
-    }
-    ,change: function(value, date, endDate){
-      layer.msg(value)
-    }
-  });
-  
+
   //分页
   laypage.render({
     elem: 'pageDemo' //分页容器的id
@@ -330,13 +304,29 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
 
+    sessionStorage.setItem("obtn1", "false");
+    sessionStorage.setItem("obtn2", "false");
+    sessionStorage.setItem("obtn3", "false");
+
     $("#obtn1").click(function(){
-        var rlist="http://101.200.43.10:8080/rule?type=";
 
+        var obtn1= sessionStorage.getItem("obtn1");
+        if(obtn1=="false"){
+            sessionStorage.setItem("obtn1", "true");
+            sessionStorage.setItem("obtn2", "false");
+            sessionStorage.setItem("obtn3", "false");
+        }
+        else{
+            sessionStorage.setItem("btn1", "false");
+        }
 
-        sessionStorage.setItem("type", "1");
-        rlist += "1";
+        obtn1= sessionStorage.getItem("obtn1");
 
+        var rlist="http://101.200.43.10:8080/rule";
+
+        if(obtn1=="true"){
+            rlist += "?type=1"
+        }
 
         table.reload('demo', {
             url: rlist
@@ -344,9 +334,24 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             //,height: 300
         });
 
+
     });
 
     $("#obtn2").click(function(){
+
+        var obtn1= sessionStorage.getItem("obtn2");
+        if(obtn1=="false"){
+            sessionStorage.setItem("obtn1", "false");
+            sessionStorage.setItem("obtn2", "true");
+            sessionStorage.setItem("obtn3", "false");
+        }
+        else{
+            sessionStorage.setItem("obtn2", "false");
+        }
+
+        obtn1= sessionStorage.getItem("obtn1");
+
+
         var rlist="http://101.200.43.10:8080/rule?type=";
 
         sessionStorage.setItem("type", "2");
