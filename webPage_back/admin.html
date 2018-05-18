@@ -187,23 +187,29 @@
 
 
             var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
-            if(!hh){
-                layer.msg("allJson   null");
+                 //hh-->string
+                // hh--> null
+              /// layer.msg( typeof  hh);
+            if(hh=="null"){
+              /// layer.msg("123");
+             ///   layer.msg("allJson   null");
                 window.location.href="login.html";
             }
+
 
             var pp = JSON.parse(hh);//将字符串抓换成对象
            /// layer.msg(JSON.stringify(pp));
         ///        layer.msg(pp.headPic);
            var strs=pp.headPic.split(",");
        var s=strs[0].substring(7,strs[0].length-1);
+     ///  layer.msg(pp.headPic);
         $("#img").attr("src",s);
 
        ///    layer.alert(s);
 
             $("#login").click(function(){
 
-                localStorage.setItem("allJson", null);
+                sessionStorage.setItem("allJson", "null");
                 window.location.href="./login.html";
 
             });
