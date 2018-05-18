@@ -20,13 +20,18 @@
   
   <!--内容待完善-->
     <div class="layui-form-item">
+
+
+        <!--
       <div class="layui-inline" style="margin-left:5px;">
       <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input"/>
    </div>
-   
+
   <div class="layui-inline ">
    <button class="layui-btn layui-btn-normal layui-btn-radius"   style=" width:130px; ">搜索</button>
-</div>  
+</div>
+        -->
+
      
   <div class="layui-inline">
     <a href="增加专家.html"> <button id="addBtn" class="layui-btn layui-btn-normal layui-btn-radius"   style=" width:130px;">增加专家</button></a>
@@ -47,7 +52,7 @@
  
 <script src="../layui.js?t=1507831962977"></script>
 <script>
-layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
+layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element','form'], function(){
   var laydate = layui.laydate //日期
   ,laypage = layui.laypage //分页
   ,layer = layui.layer //弹层
@@ -55,11 +60,14 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
   ,carousel = layui.carousel //轮播
   ,upload = layui.upload //上传
   ,element = layui.element
+      ,form = layui.form
   ,$ = layui.jquery; //元素操作
   
     var list="http://101.200.43.10:8080/expert";
     var delet="http://101.200.43.10:8080/expert/";
     var getById="http://101.200.43.10:8080/expert/";
+
+
 
 
 
@@ -74,7 +82,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,page: true //开启分页
       ,cols: [[ //表头
           {checkbox:true, fixed: true}
-          ,{field:'id', title:'ID', width:80, sort: true}
+       //   ,{field:'id', title:'ID', width:80, sort: true}
           ,{field:'name',title:'姓名', width:80}
           ,{field:'sex',title:'性别', width:80}
 
@@ -103,7 +111,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       layer.msg('查看操作');
 
 
-
+/*
         $.ajax({
             type:"GET",
             url:getById+""+data.id,
@@ -123,6 +131,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         });
 
         sessionStorage.setItem("allJson", JSON.stringify(jsonData));
+        window.location.href='查看专家.html';
+*/
+        sessionStorage.setItem("id",data.id);
         window.location.href='查看专家.html';
 
       

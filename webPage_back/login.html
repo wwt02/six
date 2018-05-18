@@ -3,7 +3,6 @@
     <title>登陆</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-
     <link href="./css/login2.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -28,7 +27,8 @@
 
 
                 <div class="login_form">
-                    <form action="" name="loginform" accept-charset="utf-8" id="login_form" class="loginForm" method="post"><input type="hidden" name="did" value="0"/>
+                    <form  class="loginForm" >
+                        <input type="hidden" name="did" value="0"/>
                         <input type="hidden" name="to" value="log"/>
                         <div class="uinArea" id="uinArea">
                             <label class="input-tips" for="u">帐号：</label>
@@ -45,7 +45,9 @@
                             </div>
                         </div>
 
-                        <div style="padding-left:50px;margin-top:20px;"><input id="submit" type="submit" value="登 录" style="width:150px;" class="button_blue"/></div>
+                        <div style="padding-left:50px;margin-top:20px;">
+                            <input id="submit" type="button" value="登 录" style="width:150px;" class="button_blue"/>
+                        </div>
                     </form>
                 </div>
 
@@ -54,7 +56,7 @@
         </div>
         <!--登录end-->
     </div>
-    <a href="admin.html">admin</a>
+
 
     <!--注册end-->
 </div>
@@ -76,13 +78,15 @@
 
 
 
+        var jsonData={};
 
-        $("#submit").click(function(){
+        $("#submit").click(function() {
 
-            var name=$("[name='name']").val();
-            var password=$("[name='password']").val();
+            var name = $("[name='name']").val();
+            var password = $("[name='password']").val();
 
 
+         ///   alert(name + "," + password);
             var flag=true;
 
             $.ajax({
@@ -91,38 +95,32 @@
                 processData: false,
                 contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
                 dataType: "json",
-               // async:false,
+                async:false,
                 data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
                 success:function(msg){
                     if(msg.code!=0){
-                        flag=false;
+                       flag=false;
                         layer.msg(msg.msg) ;
                     }
                     else{
-                        layer.msg("success") ;
-                     window.location.href="./admin.html";
+                       /// layer.msg("success") ;
+                        jsonData=msg.data;
                     }
 
                 }
             });
 
+            if(!flag)
+                return;
 
-   /*         if(!flag)
-                return;*/
 
-        ///    window.location.href="admin.html";
-           //alert(111);
+            localStorage.setItem("allJson", JSON.stringify(jsonData));
+           /// layer.msg(JSON.stringify(jsonData));
+           /// layer.msg(jsonData.headPic);
+              window.location.href="admin.html";
 
-          ///  window.location.reload("admin.html");
-    ///        window.location.href="admin.html";
-         ///   C:\Users\Administrator\IdeaProjects\second\admin.html
-
-        ///    window.location.href='admin.html';
 
         });
-
-
-
 
 
 

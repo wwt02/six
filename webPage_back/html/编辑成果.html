@@ -13,6 +13,7 @@
           
 <blockquote class="layui-elem-quote layui-text">
   鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="javascirpt:;" >书写完信息记得核对哦！</a> 2. <a href="javascirpt:;" >有些地方只需输入数字！</a>
+    <a href="成果发布.html"> <button class="layui-btn layui-layout-right" style="margin:10px;">返回</button></a>
 
 </blockquote>
                
@@ -36,9 +37,7 @@
             <div class="layui-input-inline">
                 <select name="fieldId">
 
-                    <option value="1">土壤</option>
-                    <option value="2">空气</option>
-                    <option value="3">水</option>
+
                 </select>
             </div>
         </div>
@@ -49,9 +48,7 @@
             <label class="layui-form-label">请选择区域(市级别)</label>
             <div class="layui-input-inline">
                 <select name="regionId">
-                    <option value="1">西湖区</option>
-                    <option value="2">余杭区</option>
-                    <option value="3">临安市</option>
+
                 </select>
             </div>
         </div>
@@ -170,13 +167,110 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       ,$ =layui.jquery;
 
 
+
     var modify="http://101.200.43.10:8080/achievement";
 
   
   //创建一个编辑器
   var editIndex = layedit.build('LAY_demo_editor');
- 
-  //自定义验证规则
+
+
+
+    var fieldJsonData={};
+
+    var fieldList="http://101.200.43.10:8080/field";
+
+    $.ajax({
+        type:"GET",
+        url:fieldList,
+        processData: false,
+        contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+        dataType: "json",
+        async:false,
+        data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+        success:function(msg){
+            if(msg.code!=0)
+                layer.msg(msg.msg);
+            else{
+                fieldJsonData=msg.data;
+
+            }
+
+        }
+    });
+
+    /// layer.msg(jsonData.length);
+
+    var oData=fieldJsonData;
+    var oLen=oData.length;
+    for (var i=0;i<oLen;i++){
+        $("[name='fieldId']").append("<option value=\""+oData[i].id+"\">"+oData[i].field+"</option>");
+    }
+
+    var regionJsonData={};
+
+    var regionList="http://101.200.43.10:8080/region";
+
+    $.ajax({
+        type:"GET",
+        url:regionList,
+        processData: false,
+        contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+        dataType: "json",
+        async:false,
+        data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+        success:function(msg){
+
+            if(msg.code!=0)
+                layer.msg(msg.msg);
+            else{
+
+                regionJsonData=msg.data;
+
+            }
+
+        }
+    });
+
+
+    var oData=regionJsonData;
+    var oLen=oData.length;
+    for (var i=0;i<oLen;i++){
+
+        $("[name='regionId']").append("<option value=\""+oData[i].id+"\">"+oData[i].region+"</option>");
+
+    }
+
+
+    form.render();
+
+
+ var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+    var pp = JSON.parse(hh);//将字符串抓换成对象
+
+    $("[name='id']").val(pp.id);
+    $("[name='status']").val(pp.status);
+    $("[name='price']").val(pp.price);
+    $("[name='type']").val(pp.type);
+    var arr = (pp.benefit).split("-");
+    $("[name='benefitStart']").val(arr[0]);
+    $("[name='benefitEnd']").val(arr[1]);
+
+
+    $("[name='tel']").val(pp.tel);
+    $("[name='patentee']").val(pp.patentee);
+    $("[name='title']").val(pp.title);
+    $("[name='content']").val(pp.content);
+
+    $("[name='fieldId']").val(pp.fieldId);
+    $("[name='regionId']").val(pp.regionId);
+
+    layedit.build('LAY_demo_editor');
+
+    form.render();
+
+
+    //自定义验证规则
   form.verify({
     title: function(value){
       if(value.length < 5){

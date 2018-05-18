@@ -6,8 +6,13 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="../css/layui.css"  media="all">
+    <link rel="stylesheet" href="../css3/css/layui.css"  media="all">
+
+    <!--
+     <link rel="stylesheet" href="../css/layui.css"  media="all">
+
     <link rel="stylesheet" href="../css/globle.css" media="all" />
+    -->
 
 
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
@@ -56,12 +61,29 @@
   </div>
 
 
+
+      <div class="layui-inline">
+          <label class="layui-form-label">角色</label>
+          <div class="layui-input-block">
+              <select name="role">
+                  <option value="0">普通用户</option>
+                  <option value="1">管理员</option>
+              </select>
+
+          </div>
+      </div>
+
+
+      <!--
       <div class="layui-inline">
           <label class="layui-form-label">状态</label>
           <div class="layui-input-block">
               <input name="status"  lang="" class="layui-input" type="text" disabled class="layui-input layui-disabled"/>
           </div>
       </div>
+
+      -->
+
 
 
 
@@ -86,8 +108,9 @@
   
    <div class="layui-form-item">
 
+<!--
 
-       <div class="layui-inline">
+<div class="layui-inline">
 
            <label class="layui-form-label">头像</label>
            <div class="layui-col-md3 layui-col-xs12 user_right">
@@ -99,13 +122,9 @@
            </div>
 
        </div>
+-->
 
-       <div class="layui-inline">
-           <label class="layui-form-label">角色</label>
-           <div class="layui-input-block">
-               <input name="role"  lang="" class="layui-input" type="text" disabled class="layui-input layui-disabled"/>
-           </div>
-       </div>
+
 
 
   </div>
@@ -119,7 +138,7 @@
 </form>
 
           
-<script src="../layui.js" charset="utf-8"></script>
+<script src="../css3/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 layui.use(['form', 'layedit', 'laydate'], function(){
@@ -163,23 +182,24 @@ layui.use(['form', 'layedit', 'laydate'], function(){
   form.on('submit(demo1)', function(data){
 
 
-      var jsonString ={"email":"","id":0,"name":"","password":"","role":0,"status":0,"tel":"","headPic":""};
+      var jsonString ={"email":"","id":0,"name":"","password":"","role":0,"tel":""};
       jsonString.email=$("[name='email']").val();
       jsonString.id=$("[name='id']").val();
       jsonString.name=$("[name='name']").val();
       jsonString.password=$("[name='password']").val();
 
-      jsonString.role=$("[name='role']").attr("lang");
-      jsonString.status=$("[name='status']").attr("lang");
+      jsonString.role=$("[name='role']").val();
+     // jsonString.status=$("[name='status']").attr("lang");
       jsonString.tel=$("[name='tel']").val();
 
-      jsonString.headPic=$("[name='headPic']").attr("src");
+
 
       /*
       layer.alert(JSON.stringify(jsonString), {
           title: '最终的提交信息'
       });
 */
+
 
       $.ajax({
           type:"PUT",

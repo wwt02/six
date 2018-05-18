@@ -37,8 +37,10 @@
         <dl class="layui-nav-child">
             <!--
                     <dd><a href="">修改个人资料</a></dd>
+            href="login.html"
             -->
-                    <dd><a href="">退了</a></dd>
+            <dd><a id="login">退了</a></dd>
+
                   
        </dl>
        
@@ -102,9 +104,9 @@
        
         <li class="layui-nav-item layui-nav-itemed">
         <a href="javascript:;"  kit-target data-options="{url:'./html/行业咨询.html',
-        title:'行业咨询',id:'8'}">
+        title:'行业资讯',id:'8'}">
         <i class="fa fa-square"></i></i>
-        <span>行业咨询</span></a></li>
+        <span>行业资讯</span></a></li>
         
         <li class="layui-nav-item layui-nav-itemed">
         <a href="javascript:;"  kit-target data-options="{url:'./html/地区信息.html',
@@ -167,34 +169,34 @@
 				util.fixbar();
 
 
-  
+
+       /*         ,laydate = layui.laydate //日期
+                ,laypage = layui.laypage //分页
+                ,upload = layui.upload //上传
+                ,laytpl=layui.laytpl;
+
+*/
+
             //将message设置为全局以便子页面调用
            /// message = layui.message;
             //主入口
             app.set({
                 type: 'iframe'
             }).init();
-			
-			
-			
-            var setSkin = function(value) {
-                    layui.data('kit_skin', {
-                        key: 'skin',
-                        value: value
-                    });
-                },
-                getSkinName = function() {
-                    return layui.data('kit_skin').skin;
-                },
-                switchSkin = function(value) {
-                    var _target = $('link[kit-skin]')[0];
-                  ///  _target.href = _target.href.substring(0, _target.href.lastIndexOf('/') + 1) + value + _target.href.substring(_target.href.lastIndexOf('.'));
-                    setSkin(value);
-                },
-                initSkin = function() {
-                    var skin = getSkinName();
-                    switchSkin(skin === undefined ? 'default' : skin);
-                }();
+
+            var hh = localStorage.getItem("allJson");//获取键为allJson的字符串
+            var pp = JSON.parse(hh);//将字符串抓换成对象
+      ///      var strs=pp.headPic.split(",");
+     ///   var s=strs[0].substring(7,strs[0].length-1);
+     ///   alert(s);
+
+            $("#login").click(function(){
+
+                localStorage.setItem("allJson", null);
+                window.location.href="./login.html";
+
+            });
+
 
         });
 

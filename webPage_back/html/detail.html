@@ -3,38 +3,34 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>需求详情</title>
+    <title>成果详情</title>
     <link rel="stylesheet" href="../css3/css/layui.css">
     <link rel="stylesheet" href="../css3/css/templates_css.css">
     <!--
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../css/layui.css">
-    <link rel="stylesheet" href="../css/templates_css.css">
     <link rel="stylesheet" type="text/css" href="../css/iconfont.css">
-    <script type="text/javascript" src="/common/globeDefi.js"></script>
+
+    -->
     <script type="text/javascript" src="./../js/jquery-1.11.0.min.js"></script>
-    <script src="./../js/layui.js"></script>
+    <script src="../css3/layui.js"></script>
+
     <script>
 
 
     </script>
-    -->
-
 </head>
 <body id="article-page" class="publictmp">
 <div id="all-content">
-    <!--
-    <script type="text/javascript" src="./../common/header.js"></script>
+    <!-- 头文件插入位置 -->
+<!--
 
-    -->
-
+-->
     <section id="body-content" class="layui-main">
 			<span class="layui-breadcrumb">
-			  <a href="需求管理.html">返回</a>
-                <!--
-                <a href="/templetes/demand-list.html">需求列表</a>
-                -->
-			  <a><cite>需求详情</cite></a>
+			  <a href="成果发布.html">返回</a>
+			  <!--
+			  <a href="/templetes/result-list.html">成果列表</a>
+			  -->
+			  <a><cite>成果详情</cite></a>
 			</span>
         <article id="view">
 
@@ -57,8 +53,8 @@
                 <dt>发布时间：</dt>
                 <dd>{{ d.data.time }}</dd>
                 <dd class="article-abb pull-right">
-                    {{# if(d.data.reward > 30000){ }}
-                    <span class="layui-badge">高赏金需求</span>
+                    {{# if(d.data.visitCount > 100){ }}
+                    <span class="layui-badge">热门</span>
                     {{#  } }}
                     {{# if(d.data.stick){ }}
                     <span class="layui-badge layui-bg-cyan">置顶</span>
@@ -85,22 +81,32 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th colspan="1">需求名称</th>
+                    <th colspan="1">成果名称</th>
                     <td colspan="3">{{ d.data.title }}</td>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <th>领域</th>
-                    <td>{{ d.data.field }}</td>
-                    <th>赏金</th>
-                    <td>{{ d.data.reward }}</td>
+                    <th colspan="1">专利所有人</th>
+                    <td colspan="3">{{ d.data.patentee }}</td>
                 </tr>
                 <tr>
-                    <th>发布用户</th>
-                    <td>{{ d.data.userName }}</td>
+                    <th>领域</th>
+                    <td>{{ d.data.field }}</td>
+                    <th>成果类型</th>
+                    <td>{{ d.data.type }}</td>
+                </tr>
+                <tr>
+                    <th>收益区间</th>
+                    <td>{{ d.data.benefit }}</td>
+                    <th>专利价格</th>
+                    <td>{{ d.data.price }}</td>
+                </tr>
+                <tr>
                     <th>联系方式</th>
                     <td>{{ d.data.tel }}</td>
+                    <th>区域</th>
+                    <td>{{ d.data.region }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -112,30 +118,27 @@
         <footer>
         </footer>
     </script>
-    <script type="text/javascript" src="./../common/footer.js"></script>
+
+
 </div>
-<!-- 你的HTML代码
-<script src="./../js/layui.js"></script>
+<!-- 你的HTML代码 -->
 
- -->
 <script src="../css3/layui.js"></script>
-
 <script>
-    layui.use(['jquery','laytpl','element','layer'],function(){
+    layui.use(['laytpl','element','jquery','layer'],function(){
         var $ = layui.jquery
             ,element = layui.element
-            ,layer = layui.layer
-            ,laytpl = layui.laytpl;
+            ,laytpl = layui.laytpl
+            ,layer = layui.layer;
 
-
-
+       /// var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
         var  id = sessionStorage.getItem("id");
+     ///   layer.alert(typeof  id);
 
         $.ajax({
-            url:"http://101.200.43.10:8080"+'/requirement/'+id,
+            url:'http://101.200.43.10:8080/achievement/'+id,
             dataType:'json',
             success:function(data){
-                console.log(data);
                 var getTpl = demo.innerHTML
                     ,view = document.getElementById('view');
                 laytpl(getTpl).render(data, function(html){

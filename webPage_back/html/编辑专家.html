@@ -68,9 +68,6 @@
     <div class="layui-input-inline">
         <select name="fieldId">
 
-            <option value="1">土壤</option>
-            <option value="2">空气</option>
-            <option value="3">水</option>
         </select>
     </div>
 
@@ -138,6 +135,43 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
   ,upload = layui.upload;
 
 
+    //创建一个编辑器
+    var editIndex = layedit.build('LAY_demo_editor');
+
+
+    var fieldJsonData={};
+
+    var fieldList="http://101.200.43.10:8080/field";
+
+    $.ajax({
+        type:"GET",
+        url:fieldList,
+        processData: false,
+        contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+        dataType: "json",
+        async:false,
+        data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+        success:function(msg){
+            if(msg.code!=0)
+                layer.msg(msg.msg);
+            else{
+                fieldJsonData=msg.data;
+
+            }
+
+        }
+    });
+
+    /// layer.msg(jsonData.length);
+
+    var oData=fieldJsonData;
+    var oLen=oData.length;
+    for (var i=0;i<oLen;i++){
+        $("[name='fieldId']").append("<option value=\""+oData[i].id+"\">"+oData[i].field+"</option>");
+    }
+
+
+    form.render();
 
     var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
     var pp = JSON.parse(hh);//将字符串抓换成对象
@@ -164,14 +198,15 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 
 
     $("[name='description']").val(pp.description);
+    $("[name='fieldId']").val(pp.fieldId);
 
     layedit.build('LAY_demo_editor');
+
+    form.render();
 
     var modify="http://101.200.43.10:8080/expert";
     var uploadPicture="http://101.200.43.10:8080/file";
 
-  //创建一个编辑器
-  var editIndex = layedit.build('LAY_demo_editor');
 
 
 

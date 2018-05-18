@@ -66,9 +66,7 @@
     <label class="layui-form-label">请选择领域</label>
     <div class="layui-input-block">
     <select name="fieldId">
-        <option value="1">土壤</option>
-        <option value="2">空气</option>
-        <option value="3">水</option>
+
       </select>
     </div>
   </div>
@@ -78,9 +76,7 @@
      <div class="layui-input-inline">
       <select name="regionId">
        
-        <option value="1">西湖区</option>
-        <option value="2">余杭区</option>
-        <option value="3">临安市</option>
+
       </select>
     </div>
   </div>
@@ -134,17 +130,80 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     var add="http://101.200.43.10:8080/requirement/";
 
 
-  //日期
-  laydate.render({
-    elem: '#date'
-  });
-  laydate.render({
-    elem: '#date1'
-  });
   
   //创建一个编辑器
   var editIndex = layedit.build('LAY_demo_editor');
- 
+
+
+    var fieldJsonData={};
+
+    var fieldList="http://101.200.43.10:8080/field";
+
+    $.ajax({
+        type:"GET",
+        url:fieldList,
+        processData: false,
+        contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+        dataType: "json",
+        async:false,
+        data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+        success:function(msg){
+            if(msg.code!=0)
+                layer.msg(msg.msg);
+            else{
+                fieldJsonData=msg.data;
+
+            }
+
+        }
+    });
+
+    /// layer.msg(jsonData.length);
+
+    var oData=fieldJsonData;
+    var oLen=oData.length;
+    for (var i=0;i<oLen;i++){
+        $("[name='fieldId']").append("<option value=\""+oData[i].id+"\">"+oData[i].field+"</option>");
+    }
+
+    var regionJsonData={};
+
+    var regionList="http://101.200.43.10:8080/region";
+
+    $.ajax({
+        type:"GET",
+        url:regionList,
+        processData: false,
+        contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+        dataType: "json",
+        async:false,
+        data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+        success:function(msg){
+
+            if(msg.code!=0)
+                layer.msg(msg.msg);
+            else{
+
+                regionJsonData=msg.data;
+
+            }
+
+        }
+    });
+
+
+    var oData=regionJsonData;
+    var oLen=oData.length;
+    for (var i=0;i<oLen;i++){
+
+        $("[name='regionId']").append("<option value=\""+oData[i].id+"\">"+oData[i].region+"</option>");
+
+    }
+
+
+    form.render();
+
+
   //自定义验证规则
   form.verify({
     title: function(value){
@@ -198,7 +257,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
                   layer.msg(msg.msg) ;
               }
               else{
-                  layer.msg("success") ;
+                  layer.msg("成功提交") ;
               }
 
 

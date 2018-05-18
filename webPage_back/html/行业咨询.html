@@ -17,9 +17,9 @@
  <fieldset class="layui-elem-field site-demo-button">
   <legend>资讯种类</legend>
   <div>
-   <button  class="layui-btn layui-btn-normal layui-btn-radius"  style=" width:130px;">转化流程</button>
-    <button class="layui-btn layui-btn-normal layui-btn-radius"  style=" width:130px;">金融服务</button>
-    <button class="layui-btn layui-btn-normal layui-btn-radius"  style=" width:130px;">潜力评估</button>
+   <button id="obtn1" class="layui-btn layui-btn-normal layui-btn-radius"  style=" width:130px;">转化流程</button>
+    <button id="obtn2"  class="layui-btn layui-btn-normal layui-btn-radius"  style=" width:130px;">金融服务</button>
+    <button id="obtn3" class="layui-btn layui-btn-normal layui-btn-radius"  style=" width:130px;">潜力评估</button>
 
     
   </div>
@@ -28,12 +28,19 @@
  <fieldset class="layui-elem-field site-demo-button">
   <legend>操作</legend>
   <div class="layui-form-item">
+
+
+      <!--
    <div class="layui-inline" style="margin-left:5px;">
       <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input"/>
    </div>
+
 <div class="layui-inline ">
   <button id="" class="layui-btn layui-btn-danger layui-btn-radius"   style=" width:130px;">搜索</button>
 </div>
+
+      -->
+
    
     
  <div class="layui-inline">
@@ -98,8 +105,8 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,page: true //开启分页
       ,cols: [[ //表头
           {checkbox:true, fixed: true}
-          ,{field:'id', title:'ID', width:80, sort: true}
-          ,{field:'title',title:'标题',  width:130}
+       //   ,{field:'id', title:'ID', width:80, sort: true}
+          ,{field:'title',title:'标题',  width:300}
           ,{field:'typeName',title:'类型',  width:120}
 
 
@@ -125,7 +132,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     ,layEvent = obj.event; //获得 lay-event 对应的值
     if(layEvent === 'detail'){
        layer.msg('查看操作');
-
+/*
         $.ajax({
             type:"GET",
             url:getById+""+data.id,
@@ -147,7 +154,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
         sessionStorage.setItem("allJson", JSON.stringify(jsonData));
         window.location.href='查看咨询.html';
-
+        */
+        sessionStorage.setItem("id", data.id);
+        window.location.href='查看咨询.html';
 
     } else if(layEvent === 'del'){
       layer.confirm('真的删除该行业咨询吗', function(index){
@@ -221,7 +230,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                     layer.msg(msg.msg) ;
                 }
                 else{
-                    layer.msg("success") ;
+                    layer.msg("置顶成功") ;
                 }
             }
         });
@@ -255,7 +264,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                     layer.msg(msg.msg) ;
                 }
                 else{
-                    layer.msg("success") ;
+                    layer.msg("取消置顶成功") ;
                 }
             }
         });
@@ -318,15 +327,57 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       }
     }
   });
-  
-  //上传
-  upload.render({
-    elem: '#uploadDemo'
-    ,url: '' //上传接口
-    ,done: function(res){
-      console.log(res)
-    }
-  });
+
+
+
+    $("#obtn1").click(function(){
+        var rlist="http://101.200.43.10:8080/rule?type=";
+
+
+        sessionStorage.setItem("type", "1");
+        rlist += "1";
+
+
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
+            //,height: 300
+        });
+
+    });
+
+    $("#obtn2").click(function(){
+        var rlist="http://101.200.43.10:8080/rule?type=";
+
+        sessionStorage.setItem("type", "2");
+        rlist += "2";
+
+
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
+            //,height: 300
+        });
+
+    });
+
+    $("#obtn3").click(function(){
+        var rlist="http://101.200.43.10:8080/rule?type=";
+
+
+        sessionStorage.setItem("type", "3");
+        rlist += "3";
+
+
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
+            //,height: 300
+        });
+
+    });
+
+
 });
 </script>
 </body>

@@ -32,9 +32,7 @@
     <div class="layui-input-inline">
       <select name="fieldId">
         
-        <option value="1">土壤</option>
-        <option value="2">空气</option>
-        <option value="3">水</option>
+
       </select>
     </div>
        </div>
@@ -45,9 +43,7 @@
     <label class="layui-form-label">请选择区域(市级别)</label>
      <div class="layui-input-inline">
       <select name="regionId">
-        <option value="1">西湖区</option>
-        <option value="2">余杭区</option>
-        <option value="3">临安市</option>
+
       </select>
     </div>
        </div>
@@ -152,7 +148,9 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
     var add="http://101.200.43.10:8080/achievement";
 
-  
+
+
+
   //创建一个编辑器
   var editIndex = layedit.build('LAY_demo_editor');
  
@@ -176,6 +174,77 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     });
     layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
   });
+
+
+    var fieldJsonData={};
+
+    var fieldList="http://101.200.43.10:8080/field";
+
+    $.ajax({
+        type:"GET",
+        url:fieldList,
+        processData: false,
+        contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+        dataType: "json",
+        async:false,
+        data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+        success:function(msg){
+            if(msg.code!=0)
+                layer.msg(msg.msg);
+            else{
+                fieldJsonData=msg.data;
+
+            }
+
+        }
+    });
+
+    /// layer.msg(jsonData.length);
+
+    var oData=fieldJsonData;
+    var oLen=oData.length;
+    for (var i=0;i<oLen;i++){
+        $("[name='fieldId']").append("<option value=\""+oData[i].id+"\">"+oData[i].field+"</option>");
+    }
+
+    var regionJsonData={};
+
+    var regionList="http://101.200.43.10:8080/region";
+
+    $.ajax({
+        type:"GET",
+        url:regionList,
+        processData: false,
+        contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+        dataType: "json",
+        async:false,
+        data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+        success:function(msg){
+
+            if(msg.code!=0)
+                layer.msg(msg.msg);
+            else{
+
+                regionJsonData=msg.data;
+
+            }
+
+        }
+    });
+
+
+    var oData=regionJsonData;
+    var oLen=oData.length;
+    for (var i=0;i<oLen;i++){
+
+        $("[name='regionId']").append("<option value=\""+oData[i].id+"\">"+oData[i].region+"</option>");
+
+    }
+
+
+
+    form.render();
+
 
 
   /*
@@ -219,14 +288,14 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       jsonString.title=$("[name='title']").val();
       jsonString.type=$("[name='type']").val();
 
-/*
 
-      layer.alert(JSON.stringify(jsonString), {
+
+   /*   layer.alert(JSON.stringify(jsonString), {
           title: '最终的提交信息'
       });
-
 */
-      $.ajax({
+
+     $.ajax({
           type:"POST",
           url:add,
           processData: false,
