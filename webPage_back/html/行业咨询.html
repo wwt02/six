@@ -54,21 +54,24 @@
 
 
 <table id="demo"  lay-filter="test3"></table>
-     
+
+ <script type="text/html" id="barDing">
+
+     {{#  if(d.stick === "置顶"){ }}
+     <a class="layui-btn layui-btn-normal layui-btn-xs"    lay-event="cancel">取消置顶</a>
+
+     {{#  } }}
+     {{#  if(d.stick !== "置顶"){ }}
+     <a class="layui-btn layui-btn-warm layui-btn-xs"    lay-event="movetop">置顶数据</a>
+
+     {{#  } }}
+
+ </script>
+
 <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-
-  {{#  if(d.stick === "置顶"){ }}
-  <a class="layui-btn layui-btn-normal layui-btn-xs"    lay-event="cancel">取消置顶</a>
-
-  {{#  } }}
-  {{#  if(d.stick !== "置顶"){ }}
-  <a class="layui-btn layui-btn-warm layui-btn-xs"    lay-event="movetop">置顶数据</a>
-
-  {{#  } }}
-
 
 </script>
 
@@ -111,8 +114,8 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
           ,{field:'visitCount',title:'访问次数',  width:100}
-
-          ,{fixed: 'right', title:'操作', width:230, align:'center', toolbar: '#barDemo'}
+          ,{fixed: 'right',title:'置顶操作', width:100, align:'center', toolbar: '#barDing'}
+          ,{fixed: 'right', title:'操作', width:190, align:'center', toolbar: '#barDemo'}
    
       ]]
   });

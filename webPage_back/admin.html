@@ -187,10 +187,11 @@
 
 
             var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
-                 //hh-->string
+                 //hh-->object
                 // hh--> null
-              /// layer.msg( typeof  hh);
-            if(hh=="null"){
+          ///  layer.msg( hh==null);
+
+            if(!hh || hh=="null"){
               /// layer.msg("123");
              ///   layer.msg("allJson   null");
                 window.location.href="login.html";
