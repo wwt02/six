@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>layui在线调试</title>
+    <link rel="stylesheet" href="../css3/css/layui.css" media="all">
+    <script src="../js/global.js"></script>
+
+  <style>
+    body{margin: 10px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+  </style>
+  
+  
+
+</head>
+<body>
+
+
+ <fieldset class="layui-elem-field site-demo-button">
+  <legend>操作</legend>
+
+  
+    
+  <div class="layui-form-item">
+
+
+
+
+<div class="layui-inline">
+    <a href="增加需求.html"> <button id="addBtn" class="layui-btn layui-btn-normal layui-btn-radius"   style=" width:130px;">增加需求</button></a>
+    </div>
+  
+  
+  </div>
+</fieldset>
+
+
+
+<table id="demo"  lay-filter="test3"></table>
+
+ <script type="text/html" id="barDing">
+
+     {{#  if(d.stick === "置顶"){ }}
+     <a class="layui-btn layui-btn-normal layui-btn-xs"    lay-event="cancel">取消置顶</a>
+
+     {{#  } }}
+     {{#  if(d.stick !== "置顶"){ }}
+     <a class="layui-btn layui-btn-warm layui-btn-xs"    lay-event="movetop">置顶数据</a>
+
+     {{#  } }}
+
+ </script>
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+
+</script>
+ 
+
+ <script src="../css3/layui.js"></script>
+<script>
+layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element','laytpl'], function(){
+  var laydate = layui.laydate //日期
+  ,laypage = layui.laypage //分页
+  layer = layui.layer //弹层
+  ,table = layui.table //表格
+  ,carousel = layui.carousel //轮播
+  ,upload = layui.upload //上传
+  ,element = layui.element
+  ,$ = layui.jquery
+      ,laytpl=layui.laytpl;
+
+    var list=apiUrl+"/requirement";
+    var getById=apiUrl+"/requirement/";
+    var delet=apiUrl+"/requirement/";
+    var top=apiUrl+"/requirement/setTop/";
+    var cancel=apiUrl+"/requirement/top/cancel/";
+
+
+    var jsonData={};
+
+  //第一个实例
+  var tableIns=table.render({
+      elem: '#demo'
+      ,height: 450
+      ,url: list //数据接口
+      ,page: true //开启分页
+      ,cols: [[ //表头
+          {checkbox:true, fixed: true}
+      //    ,{field:'id', title:'ID', width:80, sort: true}
+          ,{field:'title',title:'标题', width:300}
+          ,{field:'time',title:'发表时间', width:160}
+          ,{field:'userName',title:'发表用户', width:100}
+          ,{fixed: 'right',title:'置顶操作', width:100, align:'center', toolbar: '#barDing'}
+          ,{fixed: 'right',title:'操作', width:190, align:'center', toolbar: '#barDemo'}
+
+      ]]
+  });
+  
+  
+  
+  
+  //向世界问个好
+  layer.msg('需 求 管 理');
+  
+  //监听Tab切换
+  element.on('tab(demo)', function(data){
+    layer.msg('切换了：'+ this.innerHTML);
+    console.log(data);
+  });
+  
+  //监听工具条
+  table.on('tool(test3)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+    var data = obj.data //获得当前行数据
+    ,layEvent = obj.event; //获得 lay-event 对应的值
+    if(layEvent === 'detail'){
+
+        layer.msg('查看操作');
+
+
+
+
+        sessionStorage.setItem("id",data.id );
+        window.location.href='查看需求.html';
+
+    } else if(layEvent === 'del'){
+      layer.confirm('真的删除该需求吗', function(index){
+
+          $.ajax({
+              type:"DELETE",
+              url:delet+""+data.id,
+              processData: false,
+              contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+              dataType: "json",
+              async:false,
+              data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+              success:function(msg){
+                  if(msg.code!=0){
+                      layer.msg(msg.msg) ;
+                  }
+                  else{
+                      layer.msg("删除成功") ;
+                  }
+              }
+          });
+
+
+
+          obj.del(); //删除对应行（tr）的DOM结构
+        layer.close(index);
+        //向服务端发送删除指令
+      });
+    } else if(layEvent === 'edit'){
+
+      layer.msg('编辑操作');
+
+        $.ajax({
+            type:"GET",
+            url:getById+""+data.id,
+            processData: false,
+            contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+            dataType: "json",
+            async:false,
+            data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+            success:function(msg){
+                if(msg.code!=0){
+                    layer.msg(msg.msg) ;
+                }
+                else{
+                    jsonData=msg.data;
+                }
+            }
+        });
+
+       sessionStorage.setItem("allJson", JSON.stringify(jsonData));
+
+        window.location.href='编辑需求.html';
+
+    }
+
+
+    else if(layEvent ==="movetop"){
+
+
+        $.ajax({
+            type:"PUT",
+            url:top+""+data.id,
+            processData: false,
+            contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+            dataType: "json",
+            async:false,
+            data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+            success:function(msg){
+                if(msg.code!=0){
+                    layer.msg(msg.msg) ;
+                }
+                else{
+                    layer.msg("置顶成功") ;
+                }
+            }
+        });
+
+
+
+        tableIns.reload( {
+            where: { //设定异步数据接口的额外参数，任意设
+            }
+            ,page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+
+    }
+
+
+    else if(layEvent ==="cancel"){
+
+
+        $.ajax({
+            type:"PUT",
+            url:cancel+""+data.id,
+            processData: false,
+            contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+            dataType: "json",
+            async:false,
+            data:null,  //这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+            success:function(msg){
+                if(msg.code!=0){
+                    layer.msg(msg.msg) ;
+                }
+                else{
+                    layer.msg("取消置顶成功") ;
+                }
+            }
+        });
+
+        tableIns.reload( {
+            where: { //设定异步数据接口的额外参数，任意设
+            }
+            ,page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+
+
+
+
+    }
+
+  });
+  
+
+});
+</script>
+</body>
+</html>        

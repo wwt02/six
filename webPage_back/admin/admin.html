@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>后台管理主页</title>
+  <link rel="stylesheet" href="./plugins/layui/css/layui.css">
+  <link rel="stylesheet" href="./build/css/app.css" media="all" />
+    <link rel="stylesheet" href="./css/admin.css" media="all" />
+
+   <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+
+
+</head>
+<body class="layui-layout-body kit-theme">
+<div class="layui-layout layui-layout-admin  kit-layout-admin">
+
+  <div class="layui-header">
+    <div class="layui-logo">后台管理</div>
+    <!-- 头部区域 -->
+
+
+    <ul class="layui-nav layui-layout-right">
+    
+     
+                
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img id="img" src="" class="layui-nav-img">
+
+
+        </a>
+
+        <dl class="layui-nav-child">
+
+            <dd><a id="login">退了</a></dd>
+
+             <dd><a id="changePwd">修改密码</a></dd>
+
+
+                  
+       </dl>
+       
+      </li>
+     
+    </ul>
+  </div>
+  
+   <div class="layui-side layui-bg-black kit-side">
+    <div class="layui-side-scroll">
+   <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
+
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+      
+      
+        <li class="layui-nav-item ">
+        <a href="javascript:;"  kit-target data-options="{url:'./html/后台首页.html'
+        ,title:'后台首页',id:'1'}">
+        <i class="fa fa-plug"></i>
+        <span>后台首页</span></a></li>
+
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;"kit-target  data-options="{url:'./html/成果发布.html',
+        title:'成果发布',id:'2'}">
+        <i class="fa fa-book"></i>
+        <span>成果发布</span></a></li>
+
+
+<!--
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;" kit-target data-options="{url:'审核管理.html',
+        title:'审核管理',id:'3'}">
+        <i class="fa fa-pencil"></i>
+        <span>审核管理</span></a></li>
+-->
+        
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;"  kit-target data-options="{url:'./html/轮播图模块.html',
+        title:'轮播图模块',id:'4'}">
+        <i class="fa fa-home"></i>
+        <span>轮播图模块</span></a></li>
+       
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;"  kit-target data-options="{url:'./html/专家信息.html',
+        title:'专家信息',id:'5'}">
+        <i class="fa fa-cog"></i>
+        <span>专家信息</span></a></li>
+
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;"  kit-target data-options="{url:'./html/领域管理.html',
+        title:'领域管理',id:'6'}">
+        <i class="fa fa-check-square"></i>
+        <span>领域管理</span></a></li>
+       
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;"  kit-target data-options="{url:'./html/友情链接.html',
+        title:'友情链接',id:'7'}">
+        <i class="fa fa-spinner"></i></i>
+        <span>友情链接</span></a></li>
+       
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;"  kit-target data-options="{url:'./html/行业咨询.html',
+        title:'行业资讯',id:'8'}">
+        <i class="fa fa-square"></i></i>
+        <span>行业资讯</span></a></li>
+        
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;"  kit-target data-options="{url:'./html/地区信息.html',
+        title:'地区信息',id:'9'}">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <span>地区信息</span></a></li>
+	    
+        <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;"  kit-target data-options="{url:'./html/需求管理.html',
+        title:'需求管理',id:'10'}">
+        <i class="fa fa-camera-retro"></i>
+        <span>需求管理</span></a></li>
+
+       <li class="layui-nav-item layui-nav-itemed">
+       <a href="javascript:;" kit-target data-options="{url:'./html/用户管理.html',
+       title:'用户管理',id:'11'}">
+       <i class="fa fa-circle-o-notch"></i>
+       <span>用户管理</span>
+       
+       </a></li>
+
+
+        
+        
+      </ul>
+    </div>
+  </div>
+
+  
+  <div class="layui-body" id="container">
+    <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+        
+
+        </div>
+       </div> 
+
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © xxxxxxx.com - 环保成果转换平台
+  </div>
+</div>
+<script src="./plugins/layui/layui.js"></script>
+<script>
+        var message;
+        layui.config({
+            base: './build/js/',
+            version: '1.0.1'
+        }).use(['app','element','form','table',
+		'layer','util','carousel'], function() {
+            var app = layui.app,
+                $ = layui.jquery,
+                layer = layui.layer,
+				element = layui.element,
+				form =layui.form,
+				table=layui.table,
+				util=layui.util,
+				carousel = layui.carousel;
+				util.fixbar();
+
+
+
+            app.set({
+                type: 'iframe'
+            }).init();
+
+
+            var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+
+
+            if(!hh || hh=="null"){
+
+                window.location.href="login.html";
+            }
+
+
+            var pp = JSON.parse(hh);//将字符串抓换成对象
+
+           var strs=pp.headPic;
+        $("#img").attr("src",strs);
+
+
+            $("#login").click(function(){
+
+                sessionStorage.setItem("allJson", "null");
+                window.location.href="./login.html";
+
+            });
+
+
+            $("#changePwd").click(function(){
+
+                layer.open({
+                    type: 2,
+                    title: '修改密码',
+                    maxmin: true,
+                    skin: 'layui-layer-lan',
+                    shadeClose: true, //点击遮罩关闭层
+                    area : ['400px' , '250px'],
+                    shade:0.6,
+                    content: './html/changePwd.html',
+                    anim:3,
+                    success: function(layero, index){
+                    },
+                    cancel: function(index, layero){
+                        layer.close(index);
+                    }
+                });
+
+
+            });
+
+
+        });
+
+</script>
+</body>
+</html>

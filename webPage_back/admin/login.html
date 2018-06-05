@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html><head>
+    <title>登陆</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <link href="./css/login2.css" rel="stylesheet" type="text/css" />
+    <script src="./js/global.js"></script>
+
+</head>
+<body>
+<h1>用户登陆</h1>
+<div class="login" style="margin-top:30px;">
+    <div class="header">
+        <div class="switch" id="switch">
+            <a class="switch_btn_focus" id="switch_qlogin" href="javascript:void(0);" tabindex="7">快速登录</a>
+
+        </div>
+    </div>
+
+
+    <div class="web_qr_login" id="web_qr_login" style="display: block; height: 235px;">
+
+        <!--登录-->
+        <div class="web_login" id="web_login">
+
+
+            <div class="login-box">
+
+
+                <div class="login_form">
+                    <form  class="loginForm" >
+                        <input type="hidden" name="did" value="0"/>
+                        <input type="hidden" name="to" value="log"/>
+                        <div class="uinArea" id="uinArea">
+                            <label class="input-tips" for="u">帐号：</label>
+                            <div class="inputOuter" id="uArea">
+
+                                <input type="text" id="u" name="name" class="inputstyle"/>
+                            </div>
+                        </div>
+                        <div class="pwdArea" id="pwdArea">
+                            <label class="input-tips" for="p">密码：</label>
+                            <div class="inputOuter" id="pArea">
+
+                                <input type="password" id="p" name="password" class="inputstyle"/>
+                            </div>
+                        </div>
+
+                        <div style="padding-left:50px;margin-top:20px;">
+                            <input id="submit" type="button" value="登 录" style="width:150px;" class="button_blue"/>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+        <!--登录end-->
+    </div>
+
+
+    <!--注册end-->
+</div>
+<div class="jianyi">*推荐使用ie8或以上版本ie浏览器或Chrome内核浏览器访问本站</div>
+
+
+
+<script src="./css3/layui.js"></script>
+<script>
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
+        var laydate = layui.laydate //日期
+            ,layer = layui.layer //弹层
+            ,element = layui.element
+            ,$ = layui.jquery; //元素操作
+
+
+        sessionStorage.setItem("allJson", "null");
+
+
+        var jsonData={};
+
+        $("#submit").click(function() {
+
+            var name = $("[name='name']").val();
+            var password = $("[name='password']").val();
+
+
+
+
+           var flag=true;
+           $.ajax({
+                type:"POST",
+                url:apiUrl+"/admin/login?name="+name+"&password="+password,
+                processData: false,
+                contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+                dataType: "json",
+                async:false,
+                data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+                success:function(msg){
+                    if(msg.code!=0){
+                       flag=false;
+                        layer.msg(msg.msg) ;
+                    }
+                    else{
+                        jsonData=msg.data;
+                    }
+
+                }
+            });
+
+
+            if(!flag)
+                return;
+
+
+            sessionStorage.setItem("allJson", JSON.stringify(jsonData));
+
+            window.location.href="admin.html";
+
+
+        });
+
+
+
+    });
+</script>
+
+
+</body>
+
+</html>
