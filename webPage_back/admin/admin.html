@@ -64,7 +64,7 @@
         <a href="javascript:;"kit-target  data-options="{url:'./html/成果发布.html',
         title:'成果发布',id:'2'}">
         <i class="fa fa-book"></i>
-        <span>成果发布</span></a></li>
+        <span>科技成果管理</span></a></li>
 
 
 <!--
@@ -85,43 +85,43 @@
         <a href="javascript:;"  kit-target data-options="{url:'./html/专家信息.html',
         title:'专家信息',id:'5'}">
         <i class="fa fa-cog"></i>
-        <span>专家信息</span></a></li>
+        <span>专家信息管理</span></a></li>
 
         <li class="layui-nav-item layui-nav-itemed">
         <a href="javascript:;"  kit-target data-options="{url:'./html/领域管理.html',
         title:'领域管理',id:'6'}">
         <i class="fa fa-check-square"></i>
-        <span>领域管理</span></a></li>
+        <span>成果领域管理</span></a></li>
        
         <li class="layui-nav-item layui-nav-itemed">
         <a href="javascript:;"  kit-target data-options="{url:'./html/友情链接.html',
         title:'友情链接',id:'7'}">
         <i class="fa fa-spinner"></i></i>
-        <span>友情链接</span></a></li>
+        <span>友情链接管理</span></a></li>
        
         <li class="layui-nav-item layui-nav-itemed">
         <a href="javascript:;"  kit-target data-options="{url:'./html/行业咨询.html',
         title:'行业资讯',id:'8'}">
         <i class="fa fa-square"></i></i>
-        <span>行业资讯</span></a></li>
+        <span>行业资讯管理</span></a></li>
         
         <li class="layui-nav-item layui-nav-itemed">
         <a href="javascript:;"  kit-target data-options="{url:'./html/地区信息.html',
         title:'地区信息',id:'9'}">
         <i class="fa fa-user" aria-hidden="true"></i>
-        <span>地区信息</span></a></li>
+        <span>地区信息管理</span></a></li>
 	    
         <li class="layui-nav-item layui-nav-itemed">
         <a href="javascript:;"  kit-target data-options="{url:'./html/需求管理.html',
         title:'需求管理',id:'10'}">
         <i class="fa fa-camera-retro"></i>
-        <span>需求管理</span></a></li>
+        <span>科技需求管理</span></a></li>
 
        <li class="layui-nav-item layui-nav-itemed">
        <a href="javascript:;" kit-target data-options="{url:'./html/用户管理.html',
        title:'用户管理',id:'11'}">
        <i class="fa fa-circle-o-notch"></i>
-       <span>用户管理</span>
+       <span>用户信息管理</span>
        
        </a></li>
 
@@ -175,9 +175,9 @@
             var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
 
 
-            if(!hh || hh=="null"){
+           if(!hh || hh=="null"){
 
-                window.location.href="login.html";
+                window.location.href="login0.html";
             }
 
 
@@ -190,7 +190,7 @@
             $("#login").click(function(){
 
                 sessionStorage.setItem("allJson", "null");
-                window.location.href="./login.html";
+                window.location.href="./login0.html";
 
             });
 

@@ -103,10 +103,24 @@ layui.use(['form', 'layedit', 'laydate'], function(){
           data:JSON.stringify(data.field),//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
           success:function(msg){
 
-              if(msg.code!=0)
-                  layer.msg(msg.msg);
-                 else
-                 layer.msg("成功提交");
+              if(msg.code==0){
+                  layer.closeAll('loading');
+                  layer.open({
+                      content: '编辑成功',
+                      icon: '1',
+                      end:function() {
+                          window.parent.location.reload();
+                          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                          parent.layer.close(index); //再执行关闭
+                      }
+                  });
+              }
+              else{
+                  layer.closeAll('loading');
+                  layer.alert('编辑失败，稍后再试', {icon: 2});
+              }
+
+
           }
       });
 

@@ -10,20 +10,6 @@
 
     <style>
     body{margin: 10px;}
-    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
-    
-   
-   	 .layui-table-fixed-r td{height:58px!important;}
-		.layui-table-fixed-r th{height:58px!important;}
-		.layui-table img {
-  	 	 max-width: 48px;min-height: 48px;
-		}
-
-
-		.laytable-cell-3-wx_headimg ,.laytable-cell-1-wx_headimg,.laytable-cell-2-wx_headimg,.laytable-cell-3-wx_headimg,.laytable-cell-4-wx_headimg,.laytable-cell-5-wx_headimg,.laytable-cell-6-wx_headimg,.laytable-cell-7-wx_headimg,.laytable-cell-8-wx_headimg,.laytable-cell-9-wx_headimg,.laytable-cell-10-wx_headimg,.laytable-cell-11-wx_headimg,.laytable-cell-12-wx_headimg,.laytable-cell-13-wx_headimg,.laytable-cell-14-wx_headimg{
- 	   width: 48px!important;;padding:0px!important;height: 48px!important;;
-  	  line-height: 48px!important;;
-		}
 
   </style>
 </head>
@@ -45,10 +31,13 @@
 </fieldset>
  
 
-<table id="demo"  lay-filter="test3"></table> 
+<table id="demo"  lay-filter="test3" ></table>
 
-     
- 
+
+ <script type="text/html" id="pic">
+     <div><img src="{{apiUrl}}{{d.imageUrl}}" style="height:48px;width:48px;line-height:48px!important;"></div>
+ </script>
+
 <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs layui-btn-mini" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
@@ -86,7 +75,10 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,cols: [[ //表头
           {checkbox:true, fixed: true}
         /// ,{field:'id', title:'ID', width:80, sort: true}
-          ,{field: 'imageUrl', title: '图像', width:400}
+        ///  ,{field: 'imageUrl', title: '图像', width:400}
+
+         /// templet:'<div><img src="{{ d.wx_headimg}}"></div>',style:'height:48px;width:48px;line-height:48px!important;'
+          ,{field: 'imageUrl', title: '图像', width:150,toolbar: '#pic'}
           ,{field:'url', title: '文章URL',width:400}
           ,{fixed: 'right',title:'操作', width:160, align:'center', toolbar: '#barDemo'}
       ]]
@@ -112,7 +104,7 @@ $('#addBtn').on('click',function()
            maxmin: true,    
            skin: 'layui-layer-lan',    
            shadeClose: true, //点击遮罩关闭层    
-           area : ['700px' , '550px'],
+           area : ['600px' , '550px'],
 		   shade:0.6,    
            content:'增加轮播图.html',//弹框显示的url,对应的页面 
 		   anim:4,
