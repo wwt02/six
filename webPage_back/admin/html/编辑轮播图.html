@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link rel="stylesheet" href="../css3/css/layui.css">
+    <link rel="stylesheet" href="../css3/globle.css" media="all" />
 
     <script src="../js/global.js"></script>
 
@@ -16,7 +17,6 @@
 <body>
           
 <blockquote class="layui-elem-quote layui-text">
-  鉴于小伙伴的普遍反馈，------先温馨提醒两个常见“问题”：1. <a href="javascirpt:;" >书写完信息记得核对哦！</a> 2. <a href="javascirpt:;" >url别写错了哦！</a>
 </blockquote>
               
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -32,11 +32,19 @@
 
 
   <div class="layui-form-item">
-    <label class="layui-form-label">图像URL</label>
-    <div class="layui-input-block">
-      <input name="imageUrl"  lay-verify="required"   autocomplete="off" class="layui-input" type="text" />
-      
-    </div>
+
+      <div class="layui-col-md3 layui-col-xs12 user_right">
+
+          <div class="layui-upload-list">
+              <img name="headPic" value="" lay-verify="head" class="layui-upload-img  layui-circle userFaceBtn userAvatar" id="userFace" src="../images/img-1.jpg" />
+          </div>
+
+          <div class="layui-upload">
+              <button type="button" class="layui-btn" id="test1">上传图片</button>
+          </div>
+
+      </div>
+
   </div>
   
    <div class="layui-form-item">
@@ -63,20 +71,29 @@
 <script src="../css3/layui.js"></script>
 
 <script>
-layui.use(['form', 'layedit', 'laydate'], function(){
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
   var form = layui.form
   ,layer = layui.layer
   ,layedit = layui.layedit
   ,laydate = layui.laydate
-  ,$=layui.jquery;
+  ,$=layui.jquery
+  ,upload = layui.upload;
   
 	var modify=apiUrl+"/carousel";
+    var uploadPicture=apiUrl+"/file";
 
 
 
   //监听提交
   form.on('submit(demo1)', function(data){
 
+      var jsonString ={"id":0,"imageUrl":"","url":""};
+      jsonString.id=$("[name='id']").val();
+      jsonString.imageUrl=$("[name='headPic']").val();
+      jsonString.url=$("[name='url']").val();
+
+
+    ///layer.alert(JSON.stringify(jsonString));
 
 
 	  $.ajax({
@@ -85,7 +102,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       processData: false,
       contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
       dataType: "json",
-      data:JSON.stringify(data.field),//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+      data:JSON.stringify(jsonString),//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
       success:function(msg){
 
           if(msg.code!=0)
@@ -97,7 +114,39 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
     return false;
   });
-  
+
+
+    //普通图片上传
+    var uploadInst = upload.render({
+        elem: '#test1'
+        ,url: uploadPicture
+
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            obj.preview(function(index, file, result){
+                $('#userFace').attr('src', result); //图片链接（base64）
+            });
+        }
+        ,done: function(res){
+            //如果上传失败
+            if(res.code > 0){
+                return layer.msg('上传失败');
+            }
+            if(res.code==0){
+
+                var  str=res.data.src;
+                layer.msg("图片成功修改");
+                ///    layer.msg(JSON.stringify(res.data));
+                ///    layer.msg(str)
+                $("[name='headPic']").val(str);
+
+            }
+        }
+        ,error: function(){
+
+        }
+    });
+
   
 });
 </script>

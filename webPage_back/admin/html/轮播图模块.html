@@ -85,9 +85,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,page: true //开启分页
       ,cols: [[ //表头
           {checkbox:true, fixed: true}
-       //   ,{field:'id', title:'ID', width:80, sort: true}
-          ,{field: 'imageUrl', title: '图像', width:180}
-          ,{field:'url', title: '文章URL',width:180}
+        /// ,{field:'id', title:'ID', width:80, sort: true}
+          ,{field: 'imageUrl', title: '图像', width:400}
+          ,{field:'url', title: '文章URL',width:400}
           ,{fixed: 'right',title:'操作', width:160, align:'center', toolbar: '#barDemo'}
       ]]
   });
@@ -112,7 +112,7 @@ $('#addBtn').on('click',function()
            maxmin: true,    
            skin: 'layui-layer-lan',    
            shadeClose: true, //点击遮罩关闭层    
-           area : ['700px' , '400px'],
+           area : ['700px' , '550px'],
 		   shade:0.6,    
            content:'增加轮播图.html',//弹框显示的url,对应的页面 
 		   anim:4,
@@ -204,13 +204,15 @@ $('#addBtn').on('click',function()
             }
         });
 
+       /// layer.msg(apiUrl+""+jsonData.imageUrl)
+
       layer.open({
 		  type: 2,
 		   title: '编辑操作',    
 	       maxmin: true,    
 	        skin: 'layui-layer-lan',    
 	         shadeClose: true, //点击遮罩关闭层    
-	          area : ['600px' , '400px'],
+	          area : ['600px' , '550px'],
 			  shade:0.6, 
 		  content: '编辑轮播图.html',
 		  anim:3,
@@ -220,15 +222,16 @@ $('#addBtn').on('click',function()
 		    console.log(body.html()) //得到iframe页的body内容
 
               body.find('[name="id"]').val(jsonData.id);
-		     body.find('[name="imageUrl"]').val(jsonData.imageUrl);
-		    body.find('[name="url"]').val(jsonData.url);
+		     body.find('[name="headPic"]').attr("src",apiUrl+""+jsonData.imageUrl);
+              body.find('[name="headPic"]').val(jsonData.imageUrl);
+
+
+              body.find('[name="url"]').val(jsonData.url);
 
    
 		  },
           cancel: function(index, layero){
-
               layer.close(index);
-
               tableIns.reload( {
                   where: { //设定异步数据接口的额外参数，任意设
                   }
@@ -237,13 +240,12 @@ $('#addBtn').on('click',function()
                   }
               });
 
-
           }
 
 
 
 		}); 
-	
+
 	  
     }
   });
