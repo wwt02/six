@@ -72,15 +72,22 @@
      <a class="layui-btn layui-btn-danger layui-btn-xs"    lay-event="notVia">驳回</a>
 
      {{#  } }}
+
+     {{#  if(d.status === "审核未通过"){ }}
+     <a class="layui-btn  layui-btn-xs"    lay-event="via">通过</a>
+
+
+     {{#  } }}
+
  </script>
 
  <script type="text/html" id="barDing">
 
-     {{#  if(d.stick === "置顶"){ }}
+     {{#  if(d.stick === "置顶"&& d.status !== "审核未通过"){ }}
      <a class="layui-btn layui-btn-normal layui-btn-xs"    lay-event="cancel">取消置顶</a>
 
      {{#  } }}
-     {{#  if(d.stick !== "置顶"){ }}
+     {{#  if(d.stick !== "置顶"&&  d.status !== "审核未通过"){ }}
      <a class="layui-btn layui-btn-warm layui-btn-xs"    lay-event="movetop">置顶数据</a>
 
      {{#  } }}
@@ -719,8 +726,11 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
         var rlist=apiUrl+"/achievement";
 
+        var bt="",sta="";
+
         if(btn1=="true"){
-            rlist += "?role=1"
+            bt="role=1";
+          ///  rlist += "?role=1"
 
         }
 
@@ -730,15 +740,29 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
         if(status1=="true"){
-            rlist += "&status=2";
+            sta = "status=2";
         }
         else if(status2=="true"){
-            rlist += "&status=3";
+            sta = "status=3";
         }
         else if(status3=="true"){
-            rlist += "&status=1";
+            sta = "status=1";
         }
 
+        if(sta==""){
+            if(bt!=""){
+                rlist += "?"+ bt;
+            }
+        }
+        else{
+            if(bt==""){
+                rlist += "?"+ sta;
+            }
+            else{
+                rlist += "?"+bt+"&"+ sta;
+            }
+
+        }
 
 
         table.reload('demo', {
@@ -781,8 +805,10 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
         var rlist=apiUrl+"/achievement";
 
+        var bt="",sta="";
+
         if(btn2=="true"){
-            rlist += "?role=0"
+            bt = "role=0"
 
         }
 
@@ -792,14 +818,32 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
         if(status1=="true"){
-            rlist += "&status=2";
+            sta = "status=2";
         }
         else if(status2=="true"){
-            rlist += "&status=3";
+            sta = "status=3";
         }
         else if(status3=="true"){
-            rlist += "&status=1";
+            sta = "status=1";
         }
+
+
+        if(sta==""){
+            if(bt!=""){
+                rlist += "?"+ bt;
+            }
+        }
+        else{
+            if(bt==""){
+                rlist += "?"+ sta;
+            }
+            else{
+                rlist += "?"+bt+"&"+ sta;
+            }
+
+        }
+
+
 
                 table.reload('demo', {
                     url: rlist
