@@ -101,7 +101,7 @@ $('#addBtn').on('click',function()
            maxmin: true,    
            skin: 'layui-layer-lan',    
            shadeClose: true, //点击遮罩关闭层    
-           area : ['700px' , '550px'],
+           area : ['700px' , '350px'],
 		   shade:0.6,    
 		   anim:4,
            content:'增加链接.html',     //弹框显示的url,对应的页面
@@ -208,7 +208,7 @@ $('#addBtn').on('click',function()
             maxmin: true,
             skin: 'layui-layer-lan',
             shadeClose: true, //点击遮罩关闭层
-            area : ['700px' , '580px'],
+            area : ['700px' , '350px'],
             shade:0.6,
             content: '编辑链接.html',
             anim:3,
@@ -219,8 +219,8 @@ $('#addBtn').on('click',function()
 
                 body.find('[name="id"]').val(jsonData.id);
 
-                body.find('[name="headPic"]').attr("src",apiUrl+""+jsonData.headPic);
-                body.find('[name="headPic"]').val(jsonData.imageUrl);
+               /// body.find('[name="headPic"]').attr("src",apiUrl+""+jsonData.headPic);
+               /// body.find('[name="headPic"]').val(jsonData.imageUrl);
 
                 body.find('[name="name"]').val(jsonData.name);
                 body.find('[name="url"]').val(jsonData.url);

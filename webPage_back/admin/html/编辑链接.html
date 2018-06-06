@@ -31,21 +31,7 @@
 
 
 
-    <div class="layui-form-item">
 
-        <div class="layui-col-md3 layui-col-xs12 user_right">
-
-            <div class="layui-upload-list">
-                <img name="headPic" value="" lay-verify="head" class="layui-upload-img  layui-circle userFaceBtn userAvatar" id="userFace" src="../images/img-1.jpg" />
-            </div>
-
-            <div class="layui-upload">
-                <button type="button" class="layui-btn" id="test1">上传图片</button>
-            </div>
-
-        </div>
-
-    </div>
 
   
   <div class="layui-form-item">
@@ -118,17 +104,16 @@ layui.use(['form', 'layedit', 'laydate'], function(){
   form.on('submit(demo1)', function(data){
 
 
-      var jsonString ={"id":0,"headPic":"","name":0,"url":""};
+      var jsonString ={"id":0,name:"","url":""};
       jsonString.id=$("[name='id']").val();
-      jsonString.name=$("[name='headPic']").val();
       jsonString.synopsis=$("[name='name']").val();
 
       jsonString.synopsis=$("[name='url']").val();
 
 
 
-      layer.alert(JSON.stringify(jsonString));
-/*
+    ///  layer.alert(JSON.stringify(jsonString));
+
       $.ajax({
           type:"PUT",
           url:modify,
@@ -144,7 +129,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
                   layer.msg("成功提交");
           }
       });
-*/
+
     return false;
   });
   

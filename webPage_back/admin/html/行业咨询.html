@@ -204,15 +204,32 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
 
+        obtn11= sessionStorage.getItem("obtn11");
+        obtn22= sessionStorage.getItem("obtn22");
+        obtn33= sessionStorage.getItem("obtn33");
+
+        var obt="";
+        if(obtn11=="true"){
+            obt +="type=1";
+        }
+        else if(obtn22=="true"){
+            obt +="type=2";
+        }
+        else if(obtn33=="true"){
+            obt +="type=3";
+        }
+        //http://101.200.43.10:8080/rule?type=1
+
+        var rlist=apiUrl+"/rule";
+        rlist +="?"+obt;
 
 
-        tableIns.reload({
-            where: { //设定异步数据接口的额外参数，任意设
-            }
-            ,page: {
-                curr: 1 //重新从第 1 页开始
-            }
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
         });
+
+
 
     }
 
@@ -238,14 +255,31 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
 
-        tableIns.reload( {
-            where: { //设定异步数据接口的额外参数，任意设
-            }
-            ,page: {
-                curr: 1 //重新从第 1 页开始
-            }
-        });
 
+        obtn11= sessionStorage.getItem("obtn11");
+        obtn22= sessionStorage.getItem("obtn22");
+        obtn33= sessionStorage.getItem("obtn33");
+
+        var obt="";
+        if(obtn11=="true"){
+            obt +="type=1";
+        }
+        else if(obtn22=="true"){
+            obt +="type=2";
+        }
+        else if(obtn33=="true"){
+            obt +="type=3";
+        }
+        //http://101.200.43.10:8080/rule?type=1
+
+        var rlist=apiUrl+"/rule";
+        rlist +="?"+obt;
+
+
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
+        });
 
 
 

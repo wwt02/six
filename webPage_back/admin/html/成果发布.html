@@ -254,6 +254,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     else if(layEvent ==="movetop"){
 
 
+
         $.ajax({
             type:"PUT",
             url:top+""+data.id,
@@ -272,13 +273,64 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
 
-        tableIns.reload( {
+
+        var status1= sessionStorage.getItem("status1");
+        var status2= sessionStorage.getItem("status2");
+        var status3= sessionStorage.getItem("status3");
+
+        var sta="";
+
+        if(status1=="true"){
+            sta = "status=2";
+        }
+        else if(status2=="true"){
+            sta += "status=3";
+        }
+        else if(status3=="true"){
+            sta += "status=1";
+        }
+
+        var btn1= sessionStorage.getItem("btn1");
+        var btn2= sessionStorage.getItem("btn2");
+
+        var bt="";
+        if(btn1=="true"){
+            bt +="role=1";
+        }
+        else if(btn2=="true"){
+            bt +="role=0";
+        }
+
+        var rlist=apiUrl+"/achievement";
+        ///http://101.200.43.10:8080/achievement?role=1&status=1&page=1&limit=15
+        if(sta==""){
+            if(bt!=""){
+                rlist += "?"+ bt;
+            }
+        }
+        else{
+            if(bt==""){
+                rlist += "?"+ sta;
+            }
+            else{
+                rlist += "?"+bt+"&"+ sta;
+            }
+
+        }
+
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
+        });
+
+      /*  tableIns.reload( {
             where: { //设定异步数据接口的额外参数，任意设
             }
             ,page: {
                 curr: 1 //重新从第 1 页开始
             }
         });
+        */
 
 
 
@@ -306,6 +358,57 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
 
+        var status1= sessionStorage.getItem("status1");
+        var status2= sessionStorage.getItem("status2");
+        var status3= sessionStorage.getItem("status3");
+
+        var sta="";
+
+        if(status1=="true"){
+            sta = "status=2";
+        }
+        else if(status2=="true"){
+            sta += "status=3";
+        }
+        else if(status3=="true"){
+            sta += "status=1";
+        }
+
+        var btn1= sessionStorage.getItem("btn1");
+        var btn2= sessionStorage.getItem("btn2");
+
+        var bt="";
+        if(btn1=="true"){
+            bt +="role=1";
+        }
+        else if(btn2=="true"){
+            bt +="role=0";
+        }
+
+        var rlist=apiUrl+"/achievement";
+        ///http://101.200.43.10:8080/achievement?role=1&status=1&page=1&limit=15
+        if(sta==""){
+            if(bt!=""){
+                rlist += "?"+ bt;
+            }
+        }
+        else{
+            if(bt==""){
+                rlist += "?"+ sta;
+            }
+            else{
+                rlist += "?"+bt+"&"+ sta;
+            }
+
+        }
+
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
+        });
+
+
+        /*
         tableIns.reload( {
             where: { //设定异步数据接口的额外参数，任意设
             }
@@ -313,7 +416,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 curr: 1 //重新从第 1 页开始
             }
         });
-
+*/
 
 
 
@@ -322,67 +425,82 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     else if(layEvent ==="via"){
 
 
-        $.ajax({
-            type:"PUT",
-            url:audit+""+data.id+"?status=3",
-            processData: false,
-            contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
-            dataType: "json",
-            async:false,
-            data:null,  //这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
-            success:function(msg){
-                if(msg.code!=0){
-                    layer.msg(msg.msg) ;
-                }
 
-            }
+        layer.confirm('确定审核通过吗', function(index){
+
+            $.ajax({
+                type:"PUT",
+                url:audit+""+data.id+"?status=3",
+                processData: false,
+                contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+                dataType: "json",
+                async:false,
+                data:null,  //这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+                success:function(msg){
+                    if(msg.code!=0){
+                        layer.msg(msg.msg) ;
+                    }
+
+                }
+            });
+            tableIns.reload( {
+                where: { //设定异步数据接口的额外参数，任意设
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+
+
         });
-        tableIns.reload( {
-            where: { //设定异步数据接口的额外参数，任意设
-            }
-            ,page: {
-                curr: 1 //重新从第 1 页开始
-            }
-        });
+
+
 
     }
 
     else if(layEvent ==="notVia"){
 
 
-        $.ajax({
-            type:"PUT",
-            url:audit+""+data.id+"?status=2",
-            processData: false,
-            contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
-            dataType: "json",
-            async:false,
-            data:null,  //这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
-            success:function(msg){
-                if(msg.code!=0){
-                    layer.msg(msg.msg) ;
-                }
 
-            }
-        });
+        layer.confirm('确定驳回成果吗', function(index){
+
+            $.ajax({
+                type:"PUT",
+                url:audit+""+data.id+"?status=2",
+                processData: false,
+                contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+                dataType: "json",
+                async:false,
+                data:null,  //这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+                success:function(msg){
+                    if(msg.code!=0){
+                        layer.msg(msg.msg) ;
+                    }
+
+                }
+            });
             var rlist=apiUrl+"/achievement";
             rlist +="?status=1";
 
-        var btn1= sessionStorage.getItem("btn1");
-        var btn2= sessionStorage.getItem("btn2");
-        if(btn1=="true"){
-            rlist +="&role=1";
-        }
-        else if(btn2=="true"){
-            rlist +="&role=0";
-        }
+            var btn1= sessionStorage.getItem("btn1");
+            var btn2= sessionStorage.getItem("btn2");
+            if(btn1=="true"){
+                rlist +="&role=1";
+            }
+            else if(btn2=="true"){
+                rlist +="&role=0";
+            }
 
 
 
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
+            table.reload('demo', {
+                url: rlist
+                ,where: {} //设定异步数据接口的额外参数
+            });
+
         });
+
+
 
 
 
@@ -466,7 +584,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
         }
 
-        layer.msg("审核通过操作成功");
+       /// layer.msg("审核通过操作成功");
 
         tableIns.reload( {
             where: { //设定异步数据接口的额外参数，任意设
