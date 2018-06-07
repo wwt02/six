@@ -200,7 +200,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
     $("[name='description']").val(pp.description);
     $("[name='fieldId']").val(pp.fieldId);
 
-    layedit.build('LAY_demo_editor');
+    editIndex = layedit.build('LAY_demo_editor');
 
     form.render();
 
@@ -277,9 +277,10 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 
       jsonString.email=$("[name='email']").val();
       jsonString.headPic=$("[name='headPic']").val();
-
-      jsonString.description=$("[name='description']").val();
-
+     var cc= layedit.getContent(editIndex);
+ ///     jsonString.description=$("[name='description']").val();
+      jsonString.description=cc;
+     //// layer.alert(JSON.stringify(jsonString));
 
      $.ajax({
           type:"PUT",

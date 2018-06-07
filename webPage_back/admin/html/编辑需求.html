@@ -200,7 +200,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     $("[name='fieldId']").val(pp.fieldId);
     $("[name='regionId']").val(pp.regionId);
 
-    layedit.build('LAY_demo_editor');
+    editIndex =  layedit.build('LAY_demo_editor');
 
     form.render();
 
@@ -235,7 +235,9 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       var jsonString ={"content":"","fieldId":0,"id":0,"regionId":0,
           "reward":0,"status":0,"tel":"","title":"","userId":0,"visitCount":0};
 
-      jsonString.content=$("[name='content']").val();
+      var cc= layedit.getContent(editIndex);
+
+      jsonString.content=cc;
       jsonString.fieldId=$("[name='fieldId']").val();
       jsonString.id=$("[name='id']").val();
 

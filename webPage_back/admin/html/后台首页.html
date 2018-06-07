@@ -17,7 +17,7 @@ body{
   width: 100%;
 
   height:auto;
-  background:url(../images/%E7%8E%AF%E4%BF%9D/%E7%8E%AF%E4%BF%9D001.png) no-repeat center center;
+  background:url(../images/001.jpg) no-repeat center center;
     background-attachment: fixed;
     background-size:cover;
 
@@ -40,7 +40,10 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
   ,upload = layui.upload //上传
   ,element = layui.element
   , $ = layui.jquery; //元素操作
-  
+
+
+    //向世界问个好
+    layer.msg('后 台 首 页');
 
 
     var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串

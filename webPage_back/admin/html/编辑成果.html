@@ -100,13 +100,7 @@
       </div>
     </div>
 
-    <div class="layui-inline">
 
-        <label class="layui-form-label">发表用户</label>
-        <div class="layui-input-block">
-            <input name="userId"  lay-verify="required"  autocomplete="off" class="layui-input" type="text" />
-        </div>
-    </div>
 
 
     </div>
@@ -269,7 +263,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     $("[name='fieldId']").val(pp.fieldId);
     $("[name='regionId']").val(pp.regionId);
 
-    layedit.build('LAY_demo_editor');
+    editIndex = layedit.build('LAY_demo_editor');
 
     form.render();
 
@@ -306,7 +300,13 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
       jsonString.benefitEnd=$("[name='benefitEnd']").val();
       jsonString.benefitStart=$("[name='benefitStart']").val();
-      jsonString.content=$("[name='content']").val();
+
+
+
+      var cc= layedit.getContent(editIndex);
+    ////  jsonString.content=$("[name='content']").val();
+      jsonString.content=cc;
+
       jsonString.fieldId=$("[name='fieldId']").val();
       jsonString.id=$("[name='id']").val();
       jsonString.patentee=$("[name='patentee']").val();
