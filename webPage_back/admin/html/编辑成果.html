@@ -13,19 +13,11 @@
 
 </head>
 <body>
-          
-<blockquote class="layui-elem-quote layui-text">
 
-    <a href="成果发布.html"> <button class="layui-btn layui-layout-right" style="margin:10px;">返回</button></a>
 
-</blockquote>
-               
-<fieldset class="layui-elem-field layui-field-title " style="margin-top: 20px;">
-  <legend>成果信息</legend>
-</fieldset>
- 
 
-  
+
+<br/><br/>
 <form class="layui-form">
 
     <input name="id"  autocomplete="off" lay-verify="required"  class="layui-input" type="hidden" />
@@ -245,7 +237,6 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
  var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
     var pp = JSON.parse(hh);//将字符串抓换成对象
-
     $("[name='id']").val(pp.id);
     $("[name='status']").val(pp.status);
     $("[name='price']").val(pp.price);
@@ -288,7 +279,13 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     });
     layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
   });
-  
+
+
+    var closeFrame=function(){
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    }
+
   //监听提交
   form.on('submit(demo1)', function(data){
 
@@ -320,8 +317,10 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       jsonString.visitCount=$("[name='visitCount']").val();
 
 
+    var flag=true;
 
       $.ajax({
+          async: false,
           type:"PUT",
           url:modify,
           processData: false,
@@ -330,12 +329,29 @@ layui.use(['form', 'layedit', 'laydate'], function(){
           data:JSON.stringify(jsonString),//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
           success:function(msg){
 
-              if(msg.code!=0)
+              if(msg.code!=0){
                   layer.msg(msg.msg);
-              else
-                  layer.msg("成功提交");
+                   flag=false;
+              }
+
           }
       });
+
+
+      if(flag){
+          layer.open({
+              content: '编辑成功',
+              icon: '1',
+              end:function() {
+
+                  window.parent.location.reload();
+                  closeFrame();
+
+                  ///window.location.href="成果发布.html";
+              }
+          });
+
+      }
 
 
     return false;

@@ -74,21 +74,32 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
        ,url: list //数据接口
        ,page: true //开启分页
        ,cols: [[ //表头
-           {checkbox:true, fixed: true}
+       //    {checkbox:true, fixed: true}
        //    ,{field:'id', title:'ID', width:80, sort: true}
 
-           ,{field:'url',title:'链接地址', width:400}
+           {field:'url',title:'链接地址', width:400}
            ,{field:'name',title:'链接名字', width:150}
            ,{fixed: 'right',title:'操作',  width:160, align:'center', toolbar: '#barDemo'}
            
        ]]
+        , done: function(res, curr, count){
+            //如果是异步请求数据方式，res即为你接口返回的信息。
+            //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+            console.log(res);
+
+            //得到当前页码
+            console.log(curr);
+
+            //得到数据总量
+            console.log(count);
+            if(count==0){
+                layer.msg("暂无数据");
+            }
+
+        }
    });
    
-   
-   
-   
-  //向世界问个好
-  layer.msg('友 情 链 接');
+
   
 
 

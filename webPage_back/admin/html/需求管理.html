@@ -53,8 +53,14 @@
 
  </script>
 
+ <script type="text/html" id="lian">
+     <a  lay-event="lian">{{ d.title }}</a>
+ </script>
+
+
 <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+
+
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
@@ -91,29 +97,49 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,url: list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
-          {checkbox:true, fixed: true}
+      //    {checkbox:true, fixed: true}
       //    ,{field:'id', title:'ID', width:80, sort: true}
-          ,{field:'title',title:'标题', width:300}
+       //   ,{field:'title',title:'标题', width:300}
+          {title:'标题', width:300,toolbar: '#lian'}
           ,{field:'time',title:'发表时间', width:200}
           ,{field:'userName',title:'发表用户', width:130}
           ,{fixed: 'right',title:'置顶操作', width:120, align:'center', toolbar: '#barDing'}
-          ,{fixed: 'right',title:'操作', width:190, align:'center', toolbar: '#barDemo'}
+          ,{fixed: 'right',title:'操作', width:160, align:'center', toolbar: '#barDemo'}
 
       ]]
+      , done: function(res, curr, count){
+        //如果是异步请求数据方式，res即为你接口返回的信息。
+        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+        console.log(res);
+
+        //得到当前页码
+        console.log(curr);
+
+        //得到数据总量
+        console.log(count);
+        if(count==0){
+            layer.msg("暂无数据");
+        }
+
+    }
   });
   
   
   
-  
-  //向世界问个好
-  layer.msg('需 求 管 理');
+
   
   //监听Tab切换
   element.on('tab(demo)', function(data){
     layer.msg('切换了：'+ this.innerHTML);
     console.log(data);
   });
-  
+
+
+  $("#lian").click(function () {
+      layer.msg("111");
+
+  });
+
   //监听工具条
   table.on('tool(test3)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     var data = obj.data //获得当前行数据
@@ -121,9 +147,6 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     if(layEvent === 'detail'){
 
         layer.msg('查看操作');
-
-
-
 
         sessionStorage.setItem("id",data.id );
         window.location.href='查看需求.html';
@@ -250,6 +273,12 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
 
+    }
+    else if(layEvent ==="lian"){
+
+        sessionStorage.setItem("id",data.id );
+        window.location.href='查看需求.html';
+      ///  layer.msg("1111");
     }
 
   });

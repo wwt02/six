@@ -38,6 +38,11 @@
      <div><img src="{{apiUrl}}{{d.imageUrl}}" style="height:48px;width:48px;line-height:48px!important;"></div>
  </script>
 
+ <script type="text/html" id="chapter">
+     <a  href="{{d.url}}" >{{d.url}}</a>
+
+ </script>
+
 <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs layui-btn-mini" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
@@ -73,19 +78,33 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,url: list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
-          {checkbox:true, fixed: true}
+     //     {checkbox:true, fixed: true}
         /// ,{field:'id', title:'ID', width:80, sort: true}
         ///  ,{field: 'imageUrl', title: '图像', width:400}
 
-         /// templet:'<div><img src="{{ d.wx_headimg}}"></div>',style:'height:48px;width:48px;line-height:48px!important;'
-          ,{field: 'imageUrl', title: '图像', width:150,toolbar: '#pic'}
-          ,{field:'url', title: '文章URL',width:400}
+          {title: '图像', width:150,toolbar: '#pic'}
+      ///    ,{field:'url', title: '文章链接',width:400}
+          ,{title: '文章链接',width:400,toolbar: '#chapter'}
           ,{fixed: 'right',title:'操作', width:160, align:'center', toolbar: '#barDemo'}
       ]]
+      , done: function(res, curr, count){
+          //如果是异步请求数据方式，res即为你接口返回的信息。
+          //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+          console.log(res);
+
+          //得到当前页码
+          console.log(curr);
+
+          //得到数据总量
+          console.log(count);
+          if(count==0){
+              layer.msg("暂无数据");
+          }
+
+      }
   });
   
-  //向世界问个好
-  layer.msg('轮 播 图 模 块');
+
   
   //监听Tab切换
   element.on('tab(demo)', function(data){

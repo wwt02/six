@@ -12,10 +12,9 @@
 </head>
 <body id="article-page" class="publictmp">
 <div id="all-content">
-    <script type="text/javascript" src="./../common/header.js"></script>
     <section id="body-content" class="layui-main">
 			<span class="layui-breadcrumb">
-			  <a href="行业咨询.html">返回</a>
+			  <a id="oA1">返回</a>
 			  <a href="">行业资讯</a>
 			  <a><cite>正文</cite></a>
 			</span>
@@ -39,7 +38,6 @@
                     {{# if(d.data.visitCount > 100){ }}
                     <span class="layui-badge">热门</span>
                     {{#  } }}
-                    <a href="行业咨询.html"> <span class="layui-badge layui-bg-green"> 返回</span></a>
 
                     <span class="layui-badge layui-bg-cyan">置顶</span>
                     <span class="layui-badge layui-bg-blue">{{ d.data.visitCount}}次浏览</span>
@@ -55,9 +53,11 @@
         <!--文章底部-->
         <footer>
         </footer>
+
+
     </script>
 
-    <script type="text/javascript" src="./../common/footer.js"></script>
+
 </div>
 
 <script src="../css3/layui.js"></script>
@@ -86,6 +86,16 @@
 
             }
         });
+
+        var closeFrame=function(){
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+
+        $("#oA1").click(function(){
+            closeFrame();
+        });
+
 
     });
 </script>

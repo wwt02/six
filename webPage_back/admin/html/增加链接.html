@@ -104,6 +104,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
       jsonString.name=$("[name='name']").val();
       jsonString.url=$("[name='url']").val();
 
+     /// layer.alert(JSON.stringify(jsonString));
 
       $.ajax({
           type:"POST",

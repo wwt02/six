@@ -16,7 +16,7 @@
 
     <section id="body-content" class="layui-main">
 			<span class="layui-breadcrumb">
-			  <a href="成果发布.html">返回</a>
+			  <a id="oA1">返回</a>
 
 			  <a><cite>成果详情</cite></a>
 			</span>
@@ -44,7 +44,6 @@
                     {{# if(d.data.visitCount > 100){ }}
                     <span class="layui-badge">热门</span>
                     {{#  } }}
-                    <a href="成果发布.html"> <span class="layui-badge layui-bg-green"> 返回</span></a>
 
                     {{# if(d.data.stick){ }}
                     <span class="layui-badge layui-bg-cyan">置顶</span>
@@ -130,6 +129,15 @@
                 });
 
             }
+        });
+
+        var closeFrame=function(){
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+
+        $("#oA1").click(function(){
+            closeFrame();
         });
 
 

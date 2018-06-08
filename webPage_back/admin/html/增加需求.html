@@ -16,7 +16,6 @@
 <body>
           
 <blockquote class="layui-elem-quote layui-text">
-  鉴于小伙伴的普遍反馈，先温馨提示一下 1. <a href="javascirpt:;" >书写完信息记得核对哦！</a> 
 
     <a href="需求管理.html"> <button id="hui" class="layui-btn layui-layout-right" style="margin:10px;">返回</button></a>
 
@@ -35,7 +34,7 @@
    <div class="layui-inline">
     <label class="layui-form-label">发表用户</label>
     <div class="layui-input-block">
-      <input name="userId" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" type="text" />
+      <input name="userId" lay-verify="required" placeholder="请输入" autocomplete="off"  disabled class="layui-input"  type="text" />
     </div>
     </div>
     
@@ -117,7 +116,10 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     var add=apiUrl+"/requirement/";
 
 
-  
+    var hh = localStorage.getItem("allJsonLogin");//获取键为allJson的字符串
+    var pp = JSON.parse(hh);//将字符串抓换成对象
+    $("[name='userId']").val(pp.id);
+
   //创建一个编辑器
   var editIndex = layedit.build('LAY_demo_editor');
 
@@ -239,7 +241,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
                   layer.msg(msg.msg) ;
               }
               else{
-                  layer.msg("成功提交") ;
+                  layer.msg("添加成功") ;
               }
 
 

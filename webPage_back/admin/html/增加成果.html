@@ -16,7 +16,6 @@
 
 
 <blockquote class="layui-elem-quote layui-text">
-  鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="javascirpt:;" >书写完信息记得核对哦！</a> 2. <a href="javascirpt:;" >有些地方只需输入数字！</a>
 <a href="成果发布.html"> <button class="layui-btn layui-layout-right" style="margin:10px;">返回</button></a>
 </blockquote>
               
@@ -89,6 +88,17 @@
         <input name="benefitEnd" placeholder="￥" autocomplete="off" class="layui-input" type="text">
       </div>
     </div>
+
+    <div class="layui-inline">
+
+        <label class="layui-form-label">发表用户</label>
+        <div class="layui-input-block">
+            <input name="userId"  lay-verify="required"  autocomplete="off" disabled class="layui-input" type="text" />
+        </div>
+    </div>
+
+
+
     </div>
   
 
@@ -152,6 +162,9 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     var add=apiUrl+"/achievement";
 
 
+    var hh = localStorage.getItem("allJsonLogin");//获取键为allJson的字符串
+    var pp = JSON.parse(hh);//将字符串抓换成对象
+    $("[name='userId']").val(pp.id);
 
 
   //创建一个编辑器
@@ -249,15 +262,12 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     form.render();
 
 
-
-
-
   //监听提交
   form.on('submit(demo1)', function(data){
 
 
       var jsonString ={"benefitEnd":0,"benefitStart":0,"content":"","fieldId":0,"patentee":"","price":0,"regionId":0,
-          "status":1,"tel":"","title":"","type":1,"userId":1,"visitCount":0};
+          "status":1,"tel":"","title":"","type":1,"userId":0,"visitCount":0};
 
       jsonString.benefitEnd=$("[name='benefitEnd']").val();
       jsonString.benefitStart=$("[name='benefitStart']").val();
@@ -271,7 +281,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       jsonString.tel=$("[name='tel']").val();
       jsonString.title=$("[name='title']").val();
       jsonString.type=$("[name='type']").val();
-
+      jsonString.userId=$("[name='userId']").val();
+   ///   userId
 
 
      $.ajax({
@@ -287,7 +298,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
                   layer.msg(msg.msg) ;
               }
               else{
-                  layer.msg("成功提交") ;
+                  layer.msg("添加成功") ;
               }
 
 

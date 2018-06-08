@@ -74,8 +74,18 @@
             ,$ = layui.jquery; //元素操作
 
 
-        sessionStorage.setItem("allJson", "null");
+        localStorage.setItem("allJsonLogin", "null");
 
+        localStorage.setItem("rule1","false");
+        localStorage.setItem("rule2","false");
+        localStorage.setItem("rule3","false");
+
+        localStorage.setItem("role0","false" );
+        localStorage.setItem("role1","false" );
+
+        localStorage.setItem("status1","false" );
+        localStorage.setItem("status2","false" );
+        localStorage.setItem("status3","false" );
 
         var jsonData={};
 
@@ -83,9 +93,6 @@
 
             var name = $("[name='name']").val();
             var password = $("[name='password']").val();
-
-
-
 
            var flag=true;
            $.ajax({
@@ -113,7 +120,7 @@
                 return;
 
 
-            sessionStorage.setItem("allJson", JSON.stringify(jsonData));
+            localStorage.setItem("allJsonLogin", JSON.stringify(jsonData));
 
             window.location.href="admin.html";
 

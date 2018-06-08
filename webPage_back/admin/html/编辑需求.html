@@ -251,6 +251,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       jsonString.userId=$("[name='userId']").val();
       jsonString.visitCount=$("[name='visitCount']").val();
 
+      var flag=true;
+
 
       $.ajax({
           type:"PUT",
@@ -261,13 +263,25 @@ layui.use(['form', 'layedit', 'laydate'], function(){
           data:JSON.stringify(jsonString),//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
           success:function(msg){
 
-              if(msg.code!=0)
+              if(msg.code!=0){
                   layer.msg(msg.msg);
-              else
-                  layer.msg("成功提交");
+                  flag=false;
+              }
+
+
           }
       });
 
+      if(flag){
+          layer.open({
+              content: '编辑成功',
+              icon: '1',
+              end:function() {
+                  window.location.href="需求管理.html";
+              }
+          });
+
+      }
 
 
     return false;

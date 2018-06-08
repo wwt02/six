@@ -30,13 +30,10 @@
   <legend>操作</legend>
   <div class="layui-form-item">
 
-
-
-   
-    
- <div class="layui-inline">
-    <a href="增加咨询.html"> <button id="addBtn" class="layui-btn layui-btn-normal layui-btn-radius"   style=" width:130px;">增加咨询</button></a>
-</div>
+     <a href="增加咨询.html">
+         <button id="addBtn" class="layui-btn layui-btn-normal layui-btn-radius"   style=" width:130px;">增加资讯</button>
+     </a>
+  </div>
 	 
 
   
@@ -59,8 +56,12 @@
 
  </script>
 
+
+ <script type="text/html" id="lian">
+     <a  lay-event="lian">{{ d.title }}</a>
+ </script>
+
 <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
@@ -97,21 +98,123 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,url:list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
-          {checkbox:true, fixed: true}
+       ///   {checkbox:true, fixed: true}
        //   ,{field:'id', title:'ID', width:80, sort: true}
-          ,{field:'title',title:'标题',  width:300}
+          {title:'标题', width:300,toolbar: '#lian'}
           ,{field:'typeName',title:'类型',  width:120}
-
-
           ,{field:'visitCount',title:'访问次数',  width:100}
           ,{fixed: 'right',title:'置顶操作', width:120, align:'center', toolbar: '#barDing'}
           ,{fixed: 'right', title:'操作', width:190, align:'center', toolbar: '#barDemo'}
    
       ]]
+      , done: function(res, curr, count){
+          //如果是异步请求数据方式，res即为你接口返回的信息。
+          //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+          console.log(res);
+
+          //得到当前页码
+          console.log(curr);
+
+          //得到数据总量
+          console.log(count);
+          if(count==0){
+              layer.msg("暂无数据");
+          }
+
+      }
   });
-  
-  //向世界问个好
-  layer.msg('行 业 资 讯');
+
+
+    var tableLoad = function(){
+
+        obtn11= localStorage.getItem("rule1");
+        obtn22= localStorage.getItem("rule2");
+        obtn33= localStorage.getItem("rule3");
+
+        var obt="";
+        if(obtn11=="true"){
+            obt +="type=1";
+        }
+        else if(obtn22=="true"){
+            obt +="type=2";
+        }
+        else if(obtn33=="true"){
+            obt +="type=3";
+        }
+        //http://101.200.43.10:8080/rule?type=1
+
+        var rlist=apiUrl+"/rule";
+        rlist +="?"+obt;
+
+
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
+        });
+
+    }
+
+
+    var baoStatus=function(){
+
+        obtn11= localStorage.getItem("rule1");
+        obtn22= localStorage.getItem("rule2");
+        obtn33= localStorage.getItem("rule3");
+
+        if(obtn11=="true"){
+
+            $("#obtn1").removeClass("layui-btn-normal");
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").addClass("layui-btn-danger");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-normal");
+            $("#obtn2").addClass("layui-btn-normal");
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-normal");
+            $("#obtn3").addClass("layui-btn-normal");
+        }
+        else if(obtn22=="true"){
+
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-normal");
+            $("#obtn1").addClass("layui-btn-normal");
+
+            $("#obtn2").removeClass("layui-btn-normal");
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").addClass("layui-btn-danger");
+
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-normal");
+            $("#obtn3").addClass("layui-btn-normal");
+
+        }
+        else if(obtn33=="true"){
+
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-normal");
+            $("#obtn1").addClass("layui-btn-normal");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-normal");
+            $("#obtn2").addClass("layui-btn-normal");
+
+            $("#obtn3").removeClass("layui-btn-normal");
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").addClass("layui-btn-danger");
+
+        }
+
+    }
+
+
+
+    baoStatus();
+    tableLoad();
+
+
   
   //监听Tab切换
   element.on('tab(demo)', function(data){
@@ -124,10 +227,12 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     var data = obj.data //获得当前行数据
     ,layEvent = obj.event; //获得 lay-event 对应的值
     if(layEvent === 'detail'){
-       layer.msg('查看操作');
+      /// layer.msg('查看操作');
 
         sessionStorage.setItem("id", data.id);
-        window.location.href='查看咨询.html';
+
+
+      window.location.href='查看咨询.html';
 
     } else if(layEvent === 'del'){
       layer.confirm('真的删除该行业咨询吗', function(index){
@@ -181,7 +286,23 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         jsonData.title=data.title;
        sessionStorage.setItem("allJson", JSON.stringify(jsonData));
 
-        window.location.href='编辑咨询.html';
+        layer.open({
+            type: 2,
+            title: '行业资讯信息',
+            skin: 'layui-layer-lan',
+            shadeClose: true, //点击遮罩关闭层
+            area : ['100%' , '100%'],
+            shade:0.6,
+            content:'编辑咨询.html',//弹框显示的url,对应的页面
+            anim:2,
+            cancel: function(index, layero){
+                layer.close(index);
+
+            }
+        });
+
+
+     ///   window.location.href='编辑咨询.html';
 
     }
 
@@ -204,32 +325,8 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
 
-        obtn11= sessionStorage.getItem("obtn11");
-        obtn22= sessionStorage.getItem("obtn22");
-        obtn33= sessionStorage.getItem("obtn33");
 
-        var obt="";
-        if(obtn11=="true"){
-            obt +="type=1";
-        }
-        else if(obtn22=="true"){
-            obt +="type=2";
-        }
-        else if(obtn33=="true"){
-            obt +="type=3";
-        }
-        //http://101.200.43.10:8080/rule?type=1
-
-        var rlist=apiUrl+"/rule";
-        rlist +="?"+obt;
-
-
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-        });
-
-
+        tableLoad();
 
     }
 
@@ -255,64 +352,52 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
 
-
-        obtn11= sessionStorage.getItem("obtn11");
-        obtn22= sessionStorage.getItem("obtn22");
-        obtn33= sessionStorage.getItem("obtn33");
-
-        var obt="";
-        if(obtn11=="true"){
-            obt +="type=1";
-        }
-        else if(obtn22=="true"){
-            obt +="type=2";
-        }
-        else if(obtn33=="true"){
-            obt +="type=3";
-        }
-        //http://101.200.43.10:8080/rule?type=1
-
-        var rlist=apiUrl+"/rule";
-        rlist +="?"+obt;
-
-
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-        });
+        tableLoad();
 
 
 
     }
+    else if(layEvent ==="lian"){
 
+        sessionStorage.setItem("id",data.id );
+        layer.open({
+            type: 2,
+            title: '行业资讯信息',
+            skin: 'layui-layer-lan',
+            shadeClose: true, //点击遮罩关闭层
+            area : ['100%' , '100%'],
+            shade:0.6,
+            content:'查看咨询.html',//弹框显示的url,对应的页面
+            anim:2,
+            cancel: function(index, layero){
+                layer.close(index);
+
+            }
+        });
+        ///  window.location.href='查看咨询.html';
+    }
 
 
   });
   
 
-  
 
-
-
-    sessionStorage.setItem("obtn11", "false");
-    sessionStorage.setItem("obtn22", "false");
-    sessionStorage.setItem("obtn33", "false");
 
     $("#obtn1").click(function(){
 
-        var obtn11= sessionStorage.getItem("obtn11");
+        var obtn11= localStorage.getItem("rule1");
 
         if(obtn11=="false"){
-            sessionStorage.setItem("obtn11", "true");
-            sessionStorage.setItem("obtn22", "false");
-            sessionStorage.setItem("obtn33", "false");
+            localStorage.setItem("rule1", "true");
+            localStorage.setItem("rule2", "false");
+            localStorage.setItem("rule3", "false");
         }
         else{
-            sessionStorage.setItem("obtn11", "false");
+            localStorage.setItem("rule1", "false");
         }
 
 
-        obtn11= sessionStorage.getItem("obtn11");
+        obtn11= localStorage.getItem("rule1");
         if(obtn11=="true"){
             $("#obtn1").removeClass("layui-btn-normal");
             $("#obtn1").removeClass("layui-btn-danger");
@@ -335,7 +420,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         }
 
 
-        obtn11= sessionStorage.getItem("obtn11");
+        obtn11= localStorage.getItem("rule1");
 
         var rlist=apiUrl+"/rule";
 
@@ -354,18 +439,18 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     $("#obtn2").click(function(){
 
 
-        var obtn22= sessionStorage.getItem("obtn22");
+        var obtn22= localStorage.getItem("rule2");
 
         if(obtn22=="false"){
-            sessionStorage.setItem("obtn11", "false");
-            sessionStorage.setItem("obtn22", "true");
-            sessionStorage.setItem("obtn33", "false");
+            localStorage.setItem("rule1", "false");
+            localStorage.setItem("rule2", "true");
+            localStorage.setItem("rule3", "false");
         }
         else{
-            sessionStorage.setItem("obtn22", "false");
+            localStorage.setItem("rule2", "false");
         }
 
-        obtn22= sessionStorage.getItem("obtn22");
+        obtn22= localStorage.getItem("rule2");
 
         if(obtn22=="true"){
             $("#obtn1").removeClass("layui-btn-normal");
@@ -390,7 +475,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
 
-        obtn22= sessionStorage.getItem("obtn22");
+        obtn22= localStorage.getItem("rule2");
 
         var rlist=apiUrl+"/rule";
 
@@ -408,18 +493,18 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     $("#obtn3").click(function(){
 
-        var obtn33= sessionStorage.getItem("obtn33");
+        var obtn33= localStorage.getItem("rule3");
 
         if(obtn33=="false"){
-            sessionStorage.setItem("obtn11", "false");
-            sessionStorage.setItem("obtn22", "false");
-            sessionStorage.setItem("obtn33", "true");
+            localStorage.setItem("rule1", "false");
+            localStorage.setItem("rule2", "false");
+            localStorage.setItem("rule3", "true");
         }
         else{
-            sessionStorage.setItem("obtn33", "false");
+            localStorage.setItem("rule3", "false");
         }
 
-        obtn33= sessionStorage.getItem("obtn33");
+        obtn33= localStorage.getItem("rule3");
 
         if(obtn33=="true"){
             $("#obtn1").removeClass("layui-btn-normal");
@@ -446,7 +531,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
         var rlist=apiUrl+"/rule";
-        obtn33= sessionStorage.getItem("obtn33");
+        obtn33= localStorage.getItem("rule3");
 
         if(obtn33=="true"){
             rlist += "?type=3"

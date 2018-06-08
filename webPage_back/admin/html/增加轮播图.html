@@ -44,7 +44,7 @@
   </div>
   
    <div class="layui-form-item">
-    <label class="layui-form-label">文章URL</label>
+    <label class="layui-form-label">文章链接</label>
     <div class="layui-input-block">
      <input name="url"   lay-verify="required"  autocomplete="off" class="layui-input" type="text" />
     </div>
@@ -143,8 +143,18 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 			success:function(msg){
 				if(msg.code!=0)
 				layer.msg(msg);
-				else
-                    layer.msg("提交成功") ;
+				else{
+                    layer.open({
+                        content: '添加成功',
+                        icon: '1',
+                        end:function() {
+                            window.parent.location.reload();
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                        }
+                    });
+                }
+
 			}	  
  
 	  });

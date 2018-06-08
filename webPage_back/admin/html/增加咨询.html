@@ -13,29 +13,25 @@
 
 </head>
 <body>
-          
-<blockquote class="layui-elem-quote layui-text">
-  鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="javascirpt:;" >书写完信息记得核对哦！</a> 2. <a href="javascirpt:;" >记得填写发布用户哦！</a>
-<a href="行业咨询.html"> <button class="layui-btn layui-layout-right" style="margin:10px;">返回</button></a>
 
+<blockquote class="layui-elem-quote layui-text">
+  <a href="行业咨询.html"> <button class="layui-btn layui-layout-right" style="margin:10px;">返回</button></a>
 
 </blockquote>
-              
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
- <legend>咨询信息</legend>
-</fieldset>
- 
 
-  
-  
-<form class="layui-form" action="">
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>行业资讯信息</legend>
+</fieldset>
+
+<form class="layui-form">
 
    <div class="layui-form-item">
    
    <div class="layui-inline">
     <label class="layui-form-label">发表用户</label>
     <div class="layui-input-block">
-      <input name="userId" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" type="text">
+      <input name="userId" lay-verify="required"  autocomplete="off" disabled class="layui-input" type="text">
     </div>
   </div>
   
@@ -98,6 +94,9 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
     var add=apiUrl+"/rule";
 
+    var hh = localStorage.getItem("allJsonLogin");//获取键为allJson的字符串
+    var pp = JSON.parse(hh);//将字符串抓换成对象
+    $("[name='userId']").val(pp.id);
 
 
     //创建一个编辑器
@@ -122,7 +121,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
   form.on('submit(demo1)', function(data){
 
 
-      var jsonString ={"content":"","title":"","type":0,"tel":"","userId":0,"visitCount":0};
+      var jsonString ={"userId":0,"content":"","title":"","type":0,"tel":"","userId":0,"visitCount":0};
+      jsonString.userId=$("[name='userId']").val();
       jsonString.content=$("[name='content']").val();
       jsonString.title=$("[name='title']").val();
       jsonString.type=$("[name='type']").val();
@@ -144,7 +144,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
                   layer.msg(msg.msg) ;
               }
               else{
-                  layer.msg("成功提交") ;
+
+                  layer.msg("添加成功") ;
               }
 
 

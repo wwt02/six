@@ -18,9 +18,8 @@
  <fieldset class="layui-elem-field site-demo-button">
   <legend>发布角色</legend>
   <div class="layui-form-item">
-   
+      <button id="btn0" class="layui-btn layui-btn-normal layui-btn-radius" style=" width:130px; ">普通用户</button>
     <button id="btn1" class="layui-btn layui-btn-normal layui-btn-radius" style=" width:130px; ">管理员</button>
-    <button id="btn2" class="layui-btn layui-btn-normal layui-btn-radius" style=" width:130px; ">普通用户</button>
   </div>
 </fieldset>
 
@@ -30,7 +29,7 @@
   <div class="layui-form-item">
 
       <div class="layui-inline" id="div2">
-          <button id="obtn4" class="layui-btn layui-btn-warm layui-btn-radius"   style=" width:130px; ">待审核</button>
+          <button id="obtn1" class="layui-btn layui-btn-warm layui-btn-radius"   style=" width:130px; ">待审核</button>
       </div>
      <div class="layui-inline" id="div2">
          <button id="obtn2" class="layui-btn layui-btn-warm layui-btn-radius"   style=" width:130px; ">审核未通过</button>
@@ -93,8 +92,13 @@
      {{#  } }}
 
  </script>
-<script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+
+ <script type="text/html" id="lian">
+     <a  lay-event="lian">{{ d.title }}</a>
+ </script>
+
+
+ <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
@@ -126,8 +130,6 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     var cancel=apiUrl+"/achievement/top/cancel/";
 
 
-    sessionStorage.setItem("role","-1" );
-    sessionStorage.setItem("status","-1" );
 
 
     var jsonData={};
@@ -140,10 +142,11 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,url: list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
-          {checkbox:true, fixed: true}
+       //   {checkbox:true, fixed: true}
       //    ,{field:'id', title:'ID', width:60, sort: true}
-          ,{field: 'title', title: '标题', width:300}
-          ,{field: 'field', title: '领域', width:80}
+
+            {title:'标题', width:300,toolbar: '#lian'}
+            ,{field: 'field', title: '领域', width:80}
           ,{field: 'region', title: '区域', width:80}
 
           ,{field: 'userName', title: '发表用户', width:90}
@@ -153,17 +156,167 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
           ,{field: 'visitCount', title: '访问次数', width:100, sort: true}
           ,{fixed: 'right',title:'置顶操作', width:100, align:'center', toolbar: '#barDing'}
           ,{fixed: 'right',title:'审核操作', width:130, align:'center', toolbar: '#barAudit'}
-          ,{fixed: 'right',title:'操作', width:190, align:'center', toolbar: '#barDemo'}
+          ,{fixed: 'right',title:'操作', width:160, align:'center', toolbar: '#barDemo'}
 
       ]]
+        , done: function(res, curr, count){
+            //如果是异步请求数据方式，res即为你接口返回的信息。
+            //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+            console.log(res);
+
+            //得到当前页码
+            console.log(curr);
+
+            //得到数据总量
+            console.log(count);
+            if(count==0){
+                layer.msg("暂无数据");
+            }
+
+        }
   });
 
 
 
+    var tableLoad = function(){
+
+        var status1= localStorage.getItem("status1");
+        var status2= localStorage.getItem("status2");
+        var status3= localStorage.getItem("status3");
+
+        var sta="";
+
+        if(status1=="true"){
+            sta = "status=1";
+        }
+        else if(status2=="true"){
+            sta += "status=2";
+        }
+        else if(status3=="true"){
+            sta += "status=3";
+        }
 
 
-  //向世界问个好
-  layer.msg('成 果 发 布');
+
+        var btn0= localStorage.getItem("role0");
+        var btn1= localStorage.getItem("role1");
+
+        var bt="";
+        if(btn0=="true"){
+            bt +="role=0";
+        }
+        else if(btn1=="true"){
+            bt +="role=1";
+        }
+
+        var rlist=apiUrl+"/achievement";
+        ///http://101.200.43.10:8080/achievement?role=1&status=1&page=1&limit=15
+        if(sta==""){
+            if(bt!=""){
+                rlist += "?"+ bt;
+            }
+        }
+        else{
+            if(bt==""){
+                rlist += "?"+ sta;
+            }
+            else{
+                rlist += "?"+bt+"&"+ sta;
+            }
+
+        }
+
+        table.reload('demo', {
+            url: rlist
+            ,where: {} //设定异步数据接口的额外参数
+        });
+
+    }
+
+
+    var baoStatus=function(){
+
+        var btn0 = localStorage.getItem("role0");
+        var btn1 =  localStorage.getItem("role1" );
+
+        if(btn0=="true"){
+            $("#btn0").removeClass("layui-btn-danger");
+            $("#btn0").removeClass("layui-btn-normal");
+            $("#btn0").addClass("layui-btn-danger");
+
+            $("#btn1").removeClass("layui-btn-danger");
+            $("#btn1").removeClass("layui-btn-normal");
+            $("#btn1").addClass("layui-btn-normal");
+        }
+        else if(btn1=="true"){
+
+            $("#btn0").removeClass("layui-btn-danger");
+            $("#btn0").removeClass("layui-btn-normal");
+            $("#btn0").addClass("layui-btn-normal");
+
+            $("#btn1").removeClass("layui-btn-danger");
+            $("#btn1").removeClass("layui-btn-normal");
+            $("#btn1").addClass("layui-btn-danger");
+
+
+        }
+
+
+        var status1 = localStorage.getItem("status1");
+        var status2 = localStorage.getItem("status2");
+        var status3 = localStorage.getItem("status3" );
+
+        if(status1=="true"){
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-warm");
+            $("#obtn1").addClass("layui-btn-danger");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-warm");
+            $("#obtn2").addClass("layui-btn-warm");
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-warm");
+            $("#obtn3").addClass("layui-btn-warm");
+        }
+        else if(status2=="true"){
+
+
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-warm");
+            $("#obtn1").addClass("layui-btn-warm");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-warm");
+            $("#obtn2").addClass("layui-btn-danger");
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-warm");
+            $("#obtn3").addClass("layui-btn-warm");
+        }
+        else if(status3=="true"){
+
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-warm");
+            $("#obtn1").addClass("layui-btn-warm");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-warm");
+            $("#obtn2").addClass("layui-btn-warm");
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-warm");
+            $("#obtn3").addClass("layui-btn-danger");
+        }
+
+
+    }
+
+    baoStatus();
+    tableLoad();
+
+
+
   
   //监听Tab切换
   element.on('tab(demo)', function(data){
@@ -252,10 +405,24 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
         sessionStorage.setItem("allJson", JSON.stringify(jsonData));
-        window.location.href='编辑成果.html';
 
+        layer.open({
+            type: 2,
+            title: '成果信息',
+            skin: 'layui-layer-lan',
+            shadeClose: true, //点击遮罩关闭层
+            area : ['100%' , '100%'],
+            shade:0.6,
+            content:'编辑成果.html',//弹框显示的url,对应的页面
+            anim:2,
+            cancel: function(index, layero){
+                layer.close(index);
 
-      
+            }
+        });
+
+      ///  window.location.href='编辑成果.html';
+
     }
 
     else if(layEvent ==="movetop"){
@@ -281,66 +448,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         });
 
 
-        var status1= sessionStorage.getItem("status1");
-        var status2= sessionStorage.getItem("status2");
-        var status3= sessionStorage.getItem("status3");
-
-        var sta="";
-
-        if(status1=="true"){
-            sta = "status=2";
-        }
-        else if(status2=="true"){
-            sta += "status=3";
-        }
-        else if(status3=="true"){
-            sta += "status=1";
-        }
-
-        var btn1= sessionStorage.getItem("btn1");
-        var btn2= sessionStorage.getItem("btn2");
-
-        var bt="";
-        if(btn1=="true"){
-            bt +="role=1";
-        }
-        else if(btn2=="true"){
-            bt +="role=0";
-        }
-
-        var rlist=apiUrl+"/achievement";
-        ///http://101.200.43.10:8080/achievement?role=1&status=1&page=1&limit=15
-        if(sta==""){
-            if(bt!=""){
-                rlist += "?"+ bt;
-            }
-        }
-        else{
-            if(bt==""){
-                rlist += "?"+ sta;
-            }
-            else{
-                rlist += "?"+bt+"&"+ sta;
-            }
-
-        }
-
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-        });
-
-      /*  tableIns.reload( {
-            where: { //设定异步数据接口的额外参数，任意设
-            }
-            ,page: {
-                curr: 1 //重新从第 1 页开始
-            }
-        });
-        */
-
-
-
+        tableLoad();
 
     }
 
@@ -365,67 +473,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
 
-        var status1= sessionStorage.getItem("status1");
-        var status2= sessionStorage.getItem("status2");
-        var status3= sessionStorage.getItem("status3");
-
-        var sta="";
-
-        if(status1=="true"){
-            sta = "status=2";
-        }
-        else if(status2=="true"){
-            sta += "status=3";
-        }
-        else if(status3=="true"){
-            sta += "status=1";
-        }
-
-        var btn1= sessionStorage.getItem("btn1");
-        var btn2= sessionStorage.getItem("btn2");
-
-        var bt="";
-        if(btn1=="true"){
-            bt +="role=1";
-        }
-        else if(btn2=="true"){
-            bt +="role=0";
-        }
-
-        var rlist=apiUrl+"/achievement";
-        ///http://101.200.43.10:8080/achievement?role=1&status=1&page=1&limit=15
-        if(sta==""){
-            if(bt!=""){
-                rlist += "?"+ bt;
-            }
-        }
-        else{
-            if(bt==""){
-                rlist += "?"+ sta;
-            }
-            else{
-                rlist += "?"+bt+"&"+ sta;
-            }
-
-        }
-
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-        });
-
-
-        /*
-        tableIns.reload( {
-            where: { //设定异步数据接口的额外参数，任意设
-            }
-            ,page: {
-                curr: 1 //重新从第 1 页开始
-            }
-        });
-*/
-
-
+      tableLoad();
 
     }
 
@@ -451,57 +499,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 }
             });
 
-
-            var status1= sessionStorage.getItem("status1");
-            var status2= sessionStorage.getItem("status2");
-            var status3= sessionStorage.getItem("status3");
-
-            var sta="";
-
-            if(status1=="true"){
-                sta = "status=2";
-            }
-            else if(status2=="true"){
-                sta += "status=3";
-            }
-            else if(status3=="true"){
-                sta += "status=1";
-            }
-
-            var btn1= sessionStorage.getItem("btn1");
-            var btn2= sessionStorage.getItem("btn2");
-
-            var bt="";
-            if(btn1=="true"){
-                bt +="role=1";
-            }
-            else if(btn2=="true"){
-                bt +="role=0";
-            }
-
-            var rlist=apiUrl+"/achievement";
-            ///http://101.200.43.10:8080/achievement?role=1&status=1&page=1&limit=15
-            if(sta==""){
-                if(bt!=""){
-                    rlist += "?"+ bt;
-                }
-            }
-            else{
-                if(bt==""){
-                    rlist += "?"+ sta;
-                }
-                else{
-                    rlist += "?"+bt+"&"+ sta;
-                }
-
-            }
-
-            table.reload('demo', {
-                url: rlist
-                ,where: {} //设定异步数据接口的额外参数
-            });
-
-
+          tableLoad();
 
             layer.close(index);
 
@@ -533,349 +531,179 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 }
             });
 
-
-
-
-
-            var status1= sessionStorage.getItem("status1");
-            var status2= sessionStorage.getItem("status2");
-            var status3= sessionStorage.getItem("status3");
-
-            var sta="";
-
-            if(status1=="true"){
-                sta = "status=2";
-            }
-            else if(status2=="true"){
-                sta += "status=3";
-            }
-            else if(status3=="true"){
-                sta += "status=1";
-            }
-
-            var btn1= sessionStorage.getItem("btn1");
-            var btn2= sessionStorage.getItem("btn2");
-
-            var bt="";
-            if(btn1=="true"){
-                bt +="role=1";
-            }
-            else if(btn2=="true"){
-                bt +="role=0";
-            }
-
-            var rlist=apiUrl+"/achievement";
-            ///http://101.200.43.10:8080/achievement?role=1&status=1&page=1&limit=15
-            if(sta==""){
-                if(bt!=""){
-                    rlist += "?"+ bt;
-                }
-            }
-            else{
-                if(bt==""){
-                    rlist += "?"+ sta;
-                }
-                else{
-                    rlist += "?"+bt+"&"+ sta;
-                }
-
-            }
-
-            table.reload('demo', {
-                url: rlist
-                ,where: {} //设定异步数据接口的额外参数
-            });
-
-
-
+            tableLoad();
             layer.close(index);
 
         });
 
 
+    }
+    else if(layEvent ==="lian"){
 
+        sessionStorage.setItem("id",data.id );
 
+        layer.open({
+            type: 2,
+            title: '科技成果信息',
+            skin: 'layui-layer-lan',
+            shadeClose: true, //点击遮罩关闭层
+            area : ['100%' , '100%'],
+            shade:0.6,
+            content:'查看成果.html',//弹框显示的url,对应的页面
+            anim:2,
+            cancel: function(index, layero){
+                layer.close(index);
+
+            }
+        });
 
 
     }
-
 
 
   });
 
 
 
+    $("#btn0").click(function(){
 
 
+        var btn0= localStorage.getItem("role0");
 
-     $("#obtn2").click(function(){
-         var checkStatus = table.checkStatus('demo');
-         var oData=checkStatus.data;
-     var oLen=checkStatus.data.length;
-
-         for (var i=0;i<oLen;i++){
-
-             $.ajax({
-                 type:"PUT",
-                 url:audit+""+oData[i].id+"?status=2",
-                 processData: false,
-                 contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
-                 dataType: "json",
-                 async:false,
-                 data:null,  //这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
-                 success:function(msg){
-                     if(msg.code!=0){
-                         layer.msg(msg.msg) ;
-                     }
-
-                 }
-             });
-
-                layer.msg("审核未通过操作成功");
-
-             tableIns.reload( {
-                 where: { //设定异步数据接口的额外参数，任意设
-                 }
-                 ,page: {
-                     curr: 1 //重新从第 1 页开始
-                 }
-             });
-
-         }
-     });
-
-
-
-
-
-
-    $("#obtn3").click(function(){
-
-        var checkStatus = table.checkStatus('demo');
-        var oData=checkStatus.data;
-        var oLen=checkStatus.data.length;
-
-        for (var i=0;i<oLen;i++){
-
-            $.ajax({
-                type:"PUT",
-                url:audit+""+oData[i].id+"?status=3",
-                processData: false,
-                contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
-                dataType: "json",
-                async:false,
-                data:null,  //这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
-                success:function(msg){
-                    if(msg.code!=0){
-                        layer.msg(msg.msg) ;
-                    }
-
-                }
-            });
-
-
-        }
-
-       /// layer.msg("审核通过操作成功");
-
-        tableIns.reload( {
-            where: { //设定异步数据接口的额外参数，任意设
-            }
-            ,page: {
-                curr: 1 //重新从第 1 页开始
-            }
-        });
-
-    });
-
-    sessionStorage.setItem("btn1", "false");
-    sessionStorage.setItem("btn2", "false");
-
-
-    $("#btn1").click(function(){
-
-        var btn1= sessionStorage.getItem("btn1");
-        if(btn1=="false"){
-            sessionStorage.setItem("btn1", "true");
-            sessionStorage.setItem("btn2", "false");
+        if(btn0=="false"){
+            localStorage.setItem("role0", "true");
+            localStorage.setItem("role1", "false");
 
         }
         else{
-            sessionStorage.setItem("btn1", "false");
+            localStorage.setItem("role0", "false");
         }
 
-        btn1 =  sessionStorage.getItem("btn1");
+        btn0 =  localStorage.getItem("role0");
+
+        if(btn0=="true"){
+            $("#btn0").removeClass("layui-btn-danger");
+            $("#btn0").removeClass("layui-btn-normal");
+            $("#btn0").addClass("layui-btn-danger");
+
+            $("#btn1").removeClass("layui-btn-danger");
+            $("#btn1").removeClass("layui-btn-normal");
+            $("#btn1").addClass("layui-btn-normal");
+        }
+        else{
+            $("#btn0").removeClass("layui-btn-normal");
+            $("#btn0").removeClass("layui-btn-danger");
+            $("#btn0").addClass("layui-btn-normal");
+
+        }
+
+      tableLoad();
+
+    });
+
+    $("#btn1").click(function(){
+
+
+
+        var btn1=   localStorage.getItem("role1");
+        if(btn1=="false"){
+            localStorage.setItem("role0", "false");
+            localStorage.setItem("role1", "true");
+
+        }
+        else{
+            localStorage.setItem("role1", "false");
+        }
+        btn1 =  localStorage.getItem("role1");
 
         if(btn1=="true"){
+
+
+            $("#btn0").removeClass("layui-btn-danger");
+            $("#btn0").removeClass("layui-btn-normal");
+            $("#btn0").addClass("layui-btn-normal");
+
             $("#btn1").removeClass("layui-btn-danger");
             $("#btn1").removeClass("layui-btn-normal");
             $("#btn1").addClass("layui-btn-danger");
 
-            $("#btn2").removeClass("layui-btn-danger");
-            $("#btn2").removeClass("layui-btn-normal");
-            $("#btn2").addClass("layui-btn-normal");
-        }
-        else{
-            $("#btn1").removeClass("layui-btn-normal");
-            $("#btn1").removeClass("layui-btn-danger");
-            $("#btn1").addClass("layui-btn-normal");
-
-        }
-
-        btn1 =  sessionStorage.getItem("btn1");
-
-        var rlist=apiUrl+"/achievement";
-
-        var bt="",sta="";
-
-        if(btn1=="true"){
-            bt="role=1";
-          ///  rlist += "?role=1"
-
-        }
-
-        var status1= sessionStorage.getItem("status1");
-        var status2= sessionStorage.getItem("status2");
-        var status3= sessionStorage.getItem("status3");
-
-
-        if(status1=="true"){
-            sta = "status=2";
-        }
-        else if(status2=="true"){
-            sta = "status=3";
-        }
-        else if(status3=="true"){
-            sta = "status=1";
-        }
-
-        if(sta==""){
-            if(bt!=""){
-                rlist += "?"+ bt;
-            }
-        }
-        else{
-            if(bt==""){
-                rlist += "?"+ sta;
-            }
-            else{
-                rlist += "?"+bt+"&"+ sta;
-            }
-
-        }
-
-
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-        });
-
-
-    });
-
-    $("#btn2").click(function(){
-
-        var btn2=   sessionStorage.getItem("btn2");
-        if(btn2=="false"){
-            sessionStorage.setItem("btn2", "true");
-            sessionStorage.setItem("btn1", "false");
-
-        }
-        else{
-            sessionStorage.setItem("btn2", "false");
-        }
-        btn2 =  sessionStorage.getItem("btn2");
-
-        if(btn2=="true"){
-            $("#btn2").removeClass("layui-btn-danger");
-            $("#btn2").removeClass("layui-btn-normal");
-            $("#btn2").addClass("layui-btn-danger");
-
-            $("#btn1").removeClass("layui-btn-danger");
-            $("#btn1").removeClass("layui-btn-normal");
-            $("#btn1").addClass("layui-btn-normal");
         } else{
-            $("#btn2").removeClass("layui-btn-normal");
-            $("#btn2").removeClass("layui-btn-danger");
-            $("#btn2").addClass("layui-btn-normal");
+            $("#btn1").removeClass("layui-btn-normal");
+            $("#btn1").removeClass("layui-btn-danger");
+            $("#btn1").addClass("layui-btn-normal");
         }
 
-
-        btn2 =  sessionStorage.getItem("btn2");
-
-        var rlist=apiUrl+"/achievement";
-
-        var bt="",sta="";
-
-        if(btn2=="true"){
-            bt = "role=0"
-
-        }
-
-        var status1= sessionStorage.getItem("status1");
-        var status2= sessionStorage.getItem("status2");
-        var status3= sessionStorage.getItem("status3");
-
-
-        if(status1=="true"){
-            sta = "status=2";
-        }
-        else if(status2=="true"){
-            sta = "status=3";
-        }
-        else if(status3=="true"){
-            sta = "status=1";
-        }
-
-
-        if(sta==""){
-            if(bt!=""){
-                rlist += "?"+ bt;
-            }
-        }
-        else{
-            if(bt==""){
-                rlist += "?"+ sta;
-            }
-            else{
-                rlist += "?"+bt+"&"+ sta;
-            }
-
-        }
-
-
-
-                table.reload('demo', {
-                    url: rlist
-                    ,where: {} //设定异步数据接口的额外参数
-                });
+          tableLoad();
 
     });
 
 
 
-    sessionStorage.setItem("status1", "false");
-    sessionStorage.setItem("status2", "false");
-    sessionStorage.setItem("status3", "false");
 
+    $("#obtn1").click(function(){
+
+
+
+
+        var status1=localStorage.getItem("status1");
+
+        if(status1=="false"){
+            localStorage.setItem("status1", "true");
+            localStorage.setItem("status2", "false");
+            localStorage.setItem("status3", "false");
+
+        }
+        else{
+            localStorage.setItem("status1", "false");
+        }
+
+        status1=localStorage.getItem("status1");
+
+        if(status1 =="true"){
+
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-warm");
+            $("#obtn1").addClass("layui-btn-danger");
+
+            $("#obtn2").removeClass("layui-btn-danger");
+            $("#obtn2").removeClass("layui-btn-warm");
+            $("#obtn2").addClass("layui-btn-warm");
+
+            $("#obtn3").removeClass("layui-btn-danger");
+            $("#obtn3").removeClass("layui-btn-warm");
+            $("#obtn3").addClass("layui-btn-warm");
+        }
+        else{
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-warm");
+            $("#obtn1").addClass("layui-btn-warm");
+
+        }
+
+       tableLoad();
+
+    });
 
     $("#obtn2").click(function(){
 
-        var status1=sessionStorage.getItem("status1");
 
-        if(status1=="false"){
-            sessionStorage.setItem("status1", "true");
-            sessionStorage.setItem("status2", "false");
-            sessionStorage.setItem("status3", "false");
+        var status2=localStorage.getItem("status2");
+        if(status2=="false"){
+            localStorage.setItem("status1", "false");
+            localStorage.setItem("status2", "true");
+            localStorage.setItem("status3", "false");
 
         }
         else{
-            sessionStorage.setItem("status1", "false");
+            localStorage.setItem("status2", "false");
         }
 
-        status1=sessionStorage.getItem("status1");
+        status2=localStorage.getItem("status2");
+        if(status2 =="true"){
 
-        if(status1 =="true"){
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-warm");
+            $("#obtn1").addClass("layui-btn-warm");
 
             $("#obtn2").removeClass("layui-btn-danger");
             $("#obtn2").removeClass("layui-btn-warm");
@@ -884,10 +712,6 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             $("#obtn3").removeClass("layui-btn-danger");
             $("#obtn3").removeClass("layui-btn-warm");
             $("#obtn3").addClass("layui-btn-warm");
-
-            $("#obtn4").removeClass("layui-btn-danger");
-            $("#obtn4").removeClass("layui-btn-warm");
-            $("#obtn4").addClass("layui-btn-warm");
         }
         else{
             $("#obtn2").removeClass("layui-btn-danger");
@@ -896,52 +720,31 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
         }
 
-        var rlist=apiUrl+"/achievement";
-
-        status1=sessionStorage.getItem("status1");
-
-        if(status1=="true"){
-            rlist +="?status=2";
-        }
-
-
-        var btn1= sessionStorage.getItem("btn1");
-        var btn2= sessionStorage.getItem("btn2");
-        if(btn1=="true"){
-            rlist +="&role=1";
-        }
-        else if(btn2=="true"){
-            rlist +="&role=0";
-        }
-
-
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-            //,height: 300
-        });
-
-
-
+      tableLoad();
 
     });
+
 
     $("#obtn3").click(function(){
 
 
-        var status2=sessionStorage.getItem("status2");
-        if(status2=="false"){
-            sessionStorage.setItem("status1", "false");
-            sessionStorage.setItem("status2", "true");
-            sessionStorage.setItem("status3", "false");
+        var status3=localStorage.getItem("status3");
+        if(status3=="false"){
+            localStorage.setItem("status1", "false");
+            localStorage.setItem("status2", "false");
+            localStorage.setItem("status3", "true");
 
         }
         else{
-            sessionStorage.setItem("status2", "false");
+            localStorage.setItem("status3", "false");
         }
 
-        status2=sessionStorage.getItem("status2");
-        if(status2 =="true"){
+        status3=localStorage.getItem("status3");
+        if(status3 =="true"){
+
+            $("#obtn1").removeClass("layui-btn-danger");
+            $("#obtn1").removeClass("layui-btn-warm");
+            $("#obtn1").addClass("layui-btn-warm");
 
             $("#obtn2").removeClass("layui-btn-danger");
             $("#obtn2").removeClass("layui-btn-warm");
@@ -950,10 +753,6 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             $("#obtn3").removeClass("layui-btn-danger");
             $("#obtn3").removeClass("layui-btn-warm");
             $("#obtn3").addClass("layui-btn-danger");
-
-            $("#obtn4").removeClass("layui-btn-danger");
-            $("#obtn4").removeClass("layui-btn-warm");
-            $("#obtn4").addClass("layui-btn-warm");
         }
         else{
             $("#obtn3").removeClass("layui-btn-danger");
@@ -964,92 +763,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
 
-        var rlist=apiUrl+"/achievement";
-
-        status2=sessionStorage.getItem("status2");
-        if(status2=="true"){
-            rlist +="?status=3";
-
-        }
-
-        var btn1= sessionStorage.getItem("btn1");
-        var btn2= sessionStorage.getItem("btn2");
-        if(btn1=="true"){
-            rlist +="&role=1";
-        }
-        else if(btn2=="true"){
-            rlist +="&role=0";
-        }
-
-
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-        });
-
-
-    });
-
-
-    $("#obtn4").click(function(){
-
-
-        var status3=sessionStorage.getItem("status3");
-        if(status3=="false"){
-            sessionStorage.setItem("status1", "false");
-            sessionStorage.setItem("status2", "false");
-            sessionStorage.setItem("status3", "true");
-
-        }
-        else{
-            sessionStorage.setItem("status3", "false");
-        }
-
-        status3=sessionStorage.getItem("status3");
-        if(status3 =="true"){
-
-            $("#obtn2").removeClass("layui-btn-danger");
-            $("#obtn2").removeClass("layui-btn-warm");
-            $("#obtn2").addClass("layui-btn-warm");
-
-            $("#obtn3").removeClass("layui-btn-danger");
-            $("#obtn3").removeClass("layui-btn-warm");
-            $("#obtn3").addClass("layui-btn-warm");
-
-            $("#obtn4").removeClass("layui-btn-danger");
-            $("#obtn4").removeClass("layui-btn-warm");
-            $("#obtn4").addClass("layui-btn-danger");
-        }
-        else{
-            $("#obtn4").removeClass("layui-btn-danger");
-            $("#obtn4").removeClass("layui-btn-warm");
-            $("#obtn4").addClass("layui-btn-warm");
-
-        }
-
-
-
-        var rlist=apiUrl+"/achievement";
-
-        status3=sessionStorage.getItem("status3");
-        if(status3=="true"){
-            rlist +="?status=1";
-        }
-
-        var btn1= sessionStorage.getItem("btn1");
-       var  btn2= sessionStorage.getItem("btn2");
-        if(btn1=="true"){
-            rlist +="&role=1";
-        }
-        else if(btn2=="true"){
-            rlist +="&role=0";
-        }
-
-
-        table.reload('demo', {
-            url: rlist
-            ,where: {} //设定异步数据接口的额外参数
-        });
+      tableLoad();
 
     });
 

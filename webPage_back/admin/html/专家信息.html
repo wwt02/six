@@ -36,8 +36,13 @@
 
 <table id="demo"  lay-filter="test3"></table>
 
-<script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-xs layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
+
+ <script type="text/html" id="lian">
+     <a  lay-event="lian">{{ d.name }}</a>
+ </script>
+
+
+ <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs layui-btn-mini" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>
@@ -74,21 +79,36 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,url: list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
-          {checkbox:true, fixed: true}
+       ///   {checkbox:true, fixed: true}
        //   ,{field:'id', title:'ID', width:80, sort: true}
-          ,{field:'name',title:'姓名', width:120}
-          ,{field:'sex',title:'性别', width:80}
 
+        ///  ,{field:'name',title:'姓名', width:120}
+          {title:'姓名', width:120,toolbar: '#lian'}
+
+          ,{field:'sex',title:'性别', width:80}
           ,{field:'field', title:'领域', width:150}
 
-
-          ,{fixed: 'right',title:'操作', width:180, align:'center', toolbar: '#barDemo'}
+          ,{fixed: 'right',title:'操作', width:160, align:'center', toolbar: '#barDemo'}
      
       ]]
+      , done: function(res, curr, count){
+          //如果是异步请求数据方式，res即为你接口返回的信息。
+          //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+          console.log(res);
+
+          //得到当前页码
+          console.log(curr);
+
+          //得到数据总量
+          console.log(count);
+          if(count==0){
+              layer.msg("暂无数据");
+          }
+
+      }
   });
   
-  //向世界问个好
-  layer.msg('专 家 信 息');
+
   
   //监听Tab切换
   element.on('tab(demo)', function(data){
@@ -171,6 +191,14 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 	  
     }
+
+    else if(layEvent ==="lian"){
+
+        sessionStorage.setItem("id",data.id );
+        window.location.href='查看专家.html';
+    }
+
+
   });
   
   //执行一个轮播实例

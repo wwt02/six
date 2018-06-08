@@ -90,7 +90,7 @@
           <div class="layui-col-md3 layui-col-xs12 user_right">
 
               <div class="layui-upload-list">
-                  <img name="headPic"   class="layui-upload-img   userFaceBtn userAvatar" id="userFace" src="../images/img-1.jpg" />
+                  <img name="headPic" class="layui-upload-img" id="userFace" src="../images/loading.gif"/>
               </div>
 
               <div class="layui-upload">
@@ -143,6 +143,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
     var fieldJsonData={};
 
     var fieldList=apiUrl+"/field";
+    var index;
 
     $.ajax({
         type:"GET",
@@ -152,7 +153,11 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
         dataType: "json",
         async:false,
         data:null,//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
+        beforeSend:function () {
+
+        },
         success:function(msg){
+        //    layer.close(index);
             if(msg.code!=0)
                 layer.msg(msg.msg);
             else{
@@ -190,11 +195,13 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
     });
 
 
+
     $("[name='synopsis']").val(pp.synopsis);
     $("[name='email']").val(pp.email);
 
     $("[name='headPic']").attr("src",pp.headPic);
     $("[name='headPic']").val(pp.headPic);
+
 
 
     $("[name='description']").val(pp.description);
@@ -282,6 +289,9 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
       jsonString.description=cc;
      //// layer.alert(JSON.stringify(jsonString));
 
+
+      var flag=true;
+
      $.ajax({
           type:"PUT",
           url:modify,
@@ -292,12 +302,24 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
           success:function(msg){
 
               if(msg.code!=0){
-            layer.msg(JSON.stringify(msg));
+                  layer.msg(msg.msg);
+                  flag=false;
               }
-              else
-                  layer.msg("成功提交");
+
           }
       });
+
+
+      if(flag){
+          layer.open({
+              content: '编辑成功',
+              icon: '1',
+              end:function() {
+                  window.location.href="专家信息.html";
+              }
+          });
+
+      }
 
     return false;
   });

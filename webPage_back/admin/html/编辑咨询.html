@@ -13,20 +13,8 @@
 
 </head>
 <body>
-          
-<blockquote class="layui-elem-quote layui-text">
-  <a href="行业咨询.html"> <button class="layui-btn layui-layout-right" style="margin:10px;">返回</button></a>
 
-</blockquote>
-   
-               
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
- <legend>咨询信息</legend>
-</fieldset>
- 
- 
-  
-  
+<br/><br/>
 <form class="layui-form">
   <input name="id" lay-verify="required" autocomplete="off" class="layui-input" type="hidden"  />
   <input name="visitCount" lay-verify="required"  autocomplete="off" class="layui-input" type="hidden"  />
@@ -38,7 +26,7 @@
    <div class="layui-inline">
     <label class="layui-form-label">发表用户</label>
     <div class="layui-input-block">
-      <input name="userId" lay-verify="required"  autocomplete="off" class="layui-input" type="text"  />
+      <input name="userId" lay-verify="required"  autocomplete="off" disabled class="layui-input" type="text"  />
     
     </div>
   </div>
@@ -118,6 +106,9 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     $("[name='visitCount']").val(pp.visitCount);
     $("[name='title']").val(pp.title);
     $("[name='content']").val(pp.content);
+    $("[name='userId']").val(pp.userName);
+  ///  $("[name='userId']").val(pp.userName);
+
 
     editIndex = layedit.build('LAY_demo_editor');
 
@@ -135,25 +126,32 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       layedit.sync(editIndex);
     }
   });
-  
 
+
+    var closeFrame=function(){
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    }
 
   //监听提交
   form.on('submit(demo1)', function(data){
 
 
-      var jsonString ={"content":"","id":0,"status":0,"title":"","type":0,"userId":0,"visitCount":0};
+      var jsonString ={"content":"","id":0,"status":0,"title":"","type":0,"visitCount":0};
       var cc= layedit.getContent(editIndex);
 
       jsonString.content=cc;
       jsonString.id=$("[name='id']").val();
       jsonString.status=1;
       jsonString.title=$("[name='title']").val();
+
       jsonString.type=$("[name='type']").val();
-      jsonString.userId=$("[name='userId']").val();
+
       jsonString.visitCount=$("[name='visitCount']").val();
 
+  layer.alert(JSON.stringify(jsonString));
 
+    /*  var flag=true;
       $.ajax({
           type:"PUT",
           url:modify,
@@ -163,19 +161,30 @@ layui.use(['form', 'layedit', 'laydate'], function(){
           data:JSON.stringify(jsonString),//这里必须将对象转成string类型，否则将掉入无线的大坑中。。。
           success:function(msg){
               if(msg.code!=0){
+                  layer.msg(msg.msg);
+                  flag=false;
+              }
 
-                  layer.msg(msg.msg) ;
-              }
-              else{
-                  layer.msg("成功提交") ;
-              }
 
 
           }
       });
+
+
+      if(flag){
+          layer.open({
+              content: '编辑成功',
+              icon: '1',
+              end:function() {
+                window.parent.location.reload();
+                  closeFrame();
+                 /// window.location.href="行业咨询.html";
+              }
+          });
+
+      }
     
-    
-    
+    */
     
     return false;
   });
