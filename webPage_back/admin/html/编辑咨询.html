@@ -38,9 +38,6 @@
 
         <select name="type">
 
-          <option value="1">转换流程</option>
-          <option value="2">金融服务</option>
-          <option value="3">潜力评估</option>
         </select>
 
 
@@ -62,8 +59,8 @@
      
     </div>
   </div>
-  
-  
+
+  <br/>  <br/>
   
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">文章内容</label>
@@ -99,7 +96,16 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     var editIndex = layedit.build('LAY_demo_editor');
     var modify=apiUrl+"/rule/";
 
-    var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+    var select=function(){
+        $("[name='type']").append("<option value=\""+1+"\">"+"转化流程"+"</option>");
+        $("[name='type']").append("<option value=\""+2+"\">"+"金融服务"+"</option>");
+        $("[name='type']").append("<option value=\""+3+"\">"+"潜力评估"+"</option>");
+
+    }
+
+    select();
+
+    var hh = sessionStorage.getItem("ruleEditJson");//获取键为allJson的字符串
     var pp = JSON.parse(hh);//将字符串抓换成对象
 
     $("[name='id']").val(pp.id);
@@ -107,12 +113,12 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     $("[name='title']").val(pp.title);
     $("[name='content']").val(pp.content);
     $("[name='userId']").val(pp.userName);
-  ///  $("[name='userId']").val(pp.userName);
+    $("[name='type']").val(pp.typeId);
 
 
     editIndex = layedit.build('LAY_demo_editor');
 
-
+    form.render();
 
     //自定义验证规则
   form.verify({
@@ -149,9 +155,9 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
       jsonString.visitCount=$("[name='visitCount']").val();
 
-  layer.alert(JSON.stringify(jsonString));
+ /// layer.alert(JSON.stringify(jsonString));
 
-    /*  var flag=true;
+     var flag=true;
       $.ajax({
           type:"PUT",
           url:modify,
@@ -184,7 +190,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
       }
     
-    */
+
     
     return false;
   });

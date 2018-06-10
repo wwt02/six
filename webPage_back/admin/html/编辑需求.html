@@ -14,11 +14,9 @@
 </head>
 <body>
           
-<blockquote class="layui-elem-quote layui-text">
 <a href="需求管理.html"> <button class="layui-btn layui-layout-right" style="margin:10px;">返回</button></a>
 
-</blockquote>
-              
+
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
  <legend>需求信息</legend>
 </fieldset>
@@ -86,7 +84,9 @@
     
     </div>
   </div>
-  
+
+    <br/>  <br/>
+
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">文章内容</label>
     <div class="layui-input-block">
@@ -187,7 +187,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
     var modify=apiUrl+"/requirement";
 
-    var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+    var hh = sessionStorage.getItem("requirementEditJson");//获取键为allJson的字符串
     var pp = JSON.parse(hh);//将字符串抓换成对象
 
     $("[name='id']").val(pp.id);

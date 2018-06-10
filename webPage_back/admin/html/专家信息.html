@@ -38,7 +38,7 @@
 
 
  <script type="text/html" id="lian">
-     <a  lay-event="lian">{{ d.name }}</a>
+     <a  href="" lay-event="lian">{{ d.name }}</a>
  </script>
 
 
@@ -75,7 +75,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
   //第一个实例
   table.render({
       elem: '#demo'
-      ,height: 315
+      ,height: 500
       ,url: list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
@@ -183,8 +183,8 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             jsonData.sex=1;
         jsonData.headPic=data.headPic;
 
-
-        sessionStorage.setItem("allJson", JSON.stringify(jsonData));
+        sessionStorage.setItem("expertEditJson", null);
+        sessionStorage.setItem("expertEditJson", JSON.stringify(jsonData));
         window.location.href='编辑专家.html';
 
 
@@ -194,8 +194,11 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     else if(layEvent ==="lian"){
 
-        sessionStorage.setItem("id",data.id );
-        window.location.href='查看专家.html';
+        sessionStorage.setItem("expertChaId",null);
+        sessionStorage.setItem("expertChaId",data.id );
+
+        window.open("查看专家.html");
+       /// window.location.href='查看专家.html';
     }
 
 

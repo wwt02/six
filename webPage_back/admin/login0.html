@@ -119,7 +119,7 @@
             if(!flag)
                 return;
 
-
+            localStorage.setItem("allJsonLogin",null);
             localStorage.setItem("allJsonLogin", JSON.stringify(jsonData));
 
             window.location.href="admin.html";

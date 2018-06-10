@@ -54,7 +54,7 @@
  </script>
 
  <script type="text/html" id="lian">
-     <a  lay-event="lian">{{ d.title }}</a>
+     <a   href="" lay-event="lian">{{ d.title }}</a>
  </script>
 
 
@@ -93,7 +93,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
   //第一个实例
   var tableIns=table.render({
       elem: '#demo'
-      ,height: 450
+      ,height: 480
       ,url: list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
@@ -135,10 +135,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
   });
 
 
-  $("#lian").click(function () {
-      layer.msg("111");
 
-  });
 
   //监听工具条
   table.on('tool(test3)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -199,8 +196,8 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 }
             }
         });
-
-       sessionStorage.setItem("allJson", JSON.stringify(jsonData));
+        sessionStorage.setItem("requirementEditJson", null);
+       sessionStorage.setItem("requirementEditJson", JSON.stringify(jsonData));
 
         window.location.href='编辑需求.html';
 
@@ -276,8 +273,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     }
     else if(layEvent ==="lian"){
 
-        sessionStorage.setItem("id",data.id );
-        window.location.href='查看需求.html';
+        sessionStorage.setItem("requirementChaId",null );
+        sessionStorage.setItem("requirementChaId",data.id );
+        window.open("查看需求.html");
       ///  layer.msg("1111");
     }
 

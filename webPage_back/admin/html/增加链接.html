@@ -14,8 +14,7 @@
 </head>
 <body>
           
-<blockquote class="layui-elem-quote layui-text">
-</blockquote>
+
               
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
  <legend>链接信息</legend>
@@ -116,10 +115,19 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
           success:function(msg){
               if(msg.code!=0){
                   layer.msg(msg.msg) ;
-               ///   layer.msg(JSON.stringify(msg));
+
               }
               else{
-                  layer.msg("提交成功") ;
+                  layer.open({
+                      content: '添加成功',
+                      icon: '1',
+                      end:function() {
+                          window.parent.location.reload();
+                          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                          parent.layer.close(index); //再执行关闭
+                      }
+                  });
+
               }
 
 

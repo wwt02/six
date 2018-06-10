@@ -79,7 +79,7 @@
         form.on('submit(cgPwdBtn)', function(data){
             var jsonString ={"password": "", "id": ""};
 
-            var hh = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+            var hh = localStorage.getItem("allJsonLogin");//获取键为allJson的字符串
             var pp = JSON.parse(hh);//将字符串抓换成对象
             var userId = pp.id;
 
@@ -95,7 +95,15 @@
                 data:JSON.stringify(jsonString),
                 success:function(msg){
                     if(msg.code==0){
-                        layer.alert('密码修改成功', {icon: 1});
+                        layer.open({
+                            content: '密码修改成功',
+                            icon: '1',
+                            end:function() {
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                            }
+                        });
+
 
                     }else{
 

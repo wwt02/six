@@ -37,7 +37,11 @@
 <table id="demo"  lay-filter="test3"></table>
 
 
- 
+<script type="text/html" id="lian">
+    <a  href="" lay-event="lian">{{ d.url }}</a>
+</script>
+
+
 <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs layui-btn-mini" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
@@ -70,14 +74,14 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
    //第一个实例
     var tableIns = table.render({
        elem: '#demo'
-       ,height: 315
+       ,height: 500
        ,url: list //数据接口
        ,page: true //开启分页
        ,cols: [[ //表头
        //    {checkbox:true, fixed: true}
        //    ,{field:'id', title:'ID', width:80, sort: true}
-
-           {field:'url',title:'链接地址', width:400}
+            {title:'链接地址', width:400,toolbar: '#lian'}
+       //   {field:'url',title:'链接地址', width:400}
            ,{field:'name',title:'链接名字', width:150}
            ,{fixed: 'right',title:'操作',  width:160, align:'center', toolbar: '#barDemo'}
            
@@ -112,7 +116,7 @@ $('#addBtn').on('click',function()
            maxmin: true,    
            skin: 'layui-layer-lan',    
            shadeClose: true, //点击遮罩关闭层    
-           area : ['700px' , '350px'],
+           area : ['700px' , '330px'],
 		   shade:0.6,    
 		   anim:4,
            content:'增加链接.html',     //弹框显示的url,对应的页面
@@ -191,7 +195,8 @@ $('#addBtn').on('click',function()
         layer.close(index);
         //向服务端发送删除指令
       });
-    } else if(layEvent === 'edit'){
+    }
+    else if(layEvent === 'edit'){
     ///  layer.msg('编辑操作');
 
 
@@ -219,7 +224,7 @@ $('#addBtn').on('click',function()
             maxmin: true,
             skin: 'layui-layer-lan',
             shadeClose: true, //点击遮罩关闭层
-            area : ['700px' , '350px'],
+            area : ['700px' , '330px'],
             shade:0.6,
             content: '编辑链接.html',
             anim:3,
@@ -259,6 +264,13 @@ $('#addBtn').on('click',function()
 
 
     }
+
+    else if(layEvent ==="lian"){
+       window.open(data.url);
+
+
+    }
+
   });
   
   //执行一个轮播实例

@@ -16,7 +16,7 @@
 
     <section id="body-content" class="layui-main">
 			<span class="layui-breadcrumb">
-			  <a href="需求管理.html">返回</a>
+			  <a id="oA1" href="">返回</a>
 
 			  <a><cite>需求详情</cite></a>
 			</span>
@@ -44,7 +44,6 @@
                     {{# if(d.data.reward > 30000){ }}
                     <span class="layui-badge">高赏金需求</span>
                     {{#  } }}
-                    <a href="需求管理.html"> <span class="layui-badge layui-bg-green"> 返回</span></a>
 
                     {{# if(d.data.stick){ }}
                     <span class="layui-badge layui-bg-cyan">置顶</span>
@@ -112,7 +111,7 @@
 
 
 
-        var  id = sessionStorage.getItem("id");
+        var  id = sessionStorage.getItem("requirementChaId");
 
         $.ajax({
             url:apiUrl+'/requirement/'+id,
@@ -127,6 +126,13 @@
 
             }
         });
+
+
+        $("#oA1").click(function () {
+
+            window.close();
+        });
+
 
 
     });

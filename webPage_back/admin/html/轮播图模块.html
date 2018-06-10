@@ -39,7 +39,7 @@
  </script>
 
  <script type="text/html" id="chapter">
-     <a  href="{{d.url}}" >{{d.url}}</a>
+     <a   lay-event="lian" href="" >{{d.url}}</a>
 
  </script>
 
@@ -74,7 +74,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
   //第一个实例
   var  tableIns =table.render({
       elem: '#demo'
-      ,height: 315
+      ,height: 500
       ,url: list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
@@ -259,6 +259,13 @@ $('#addBtn').on('click',function()
 
 	  
     }
+    else if(layEvent=="lian"){
+        window.open(data.url);
+
+
+    }
+
+
   });
 
   //分页

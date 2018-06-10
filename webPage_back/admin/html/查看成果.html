@@ -116,7 +116,7 @@
             ,laytpl = layui.laytpl
             ,layer = layui.layer;
 
-        var  id = sessionStorage.getItem("id");
+        var  id = sessionStorage.getItem("achievementChaId");
 
         $.ajax({
             url:apiUrl+'/achievement/'+id,
@@ -137,7 +137,7 @@
         }
 
         $("#oA1").click(function(){
-            closeFrame();
+            window.close();
         });
 
 

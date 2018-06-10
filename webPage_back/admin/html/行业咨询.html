@@ -58,7 +58,7 @@
 
 
  <script type="text/html" id="lian">
-     <a  lay-event="lian">{{ d.title }}</a>
+     <a  href=""  lay-event="lian">{{ d.title }}</a>
  </script>
 
 <script type="text/html" id="barDemo">
@@ -94,7 +94,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
   //第一个实例
   var tableIns =table.render({
       elem: '#demo'
-      ,height: 315
+      ,height: 430
       ,url:list //数据接口
       ,page: true //开启分页
       ,cols: [[ //表头
@@ -283,8 +283,10 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
 
-        jsonData.title=data.title;
-       sessionStorage.setItem("allJson", JSON.stringify(jsonData));
+      ///  jsonData.title=data.title;
+
+        sessionStorage.setItem("ruleEditJson",null);
+        sessionStorage.setItem("ruleEditJson", JSON.stringify(jsonData));
 
         layer.open({
             type: 2,
@@ -359,21 +361,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     }
     else if(layEvent ==="lian"){
 
-        sessionStorage.setItem("id",data.id );
-        layer.open({
-            type: 2,
-            title: '行业资讯信息',
-            skin: 'layui-layer-lan',
-            shadeClose: true, //点击遮罩关闭层
-            area : ['100%' , '100%'],
-            shade:0.6,
-            content:'查看咨询.html',//弹框显示的url,对应的页面
-            anim:2,
-            cancel: function(index, layero){
-                layer.close(index);
-
-            }
-        });
+        sessionStorage.setItem("ruleChaId",null );
+        sessionStorage.setItem("ruleChaId",data.id );
+        window.open("查看咨询.html");
         ///  window.location.href='查看咨询.html';
     }
 

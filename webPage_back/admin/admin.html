@@ -33,7 +33,7 @@
 
         <dl class="layui-nav-child">
 
-            <dd><a id="login">退了</a></dd>
+            <dd><a id="tui">退了</a></dd>
 
              <dd><a id="changePwd">修改密码</a></dd>
 
@@ -192,10 +192,10 @@
 
 
 
-          $("#login").click(function(){
+          $("#tui").click(function(){
 
-                sessionStorage.setItem("allJson", "null");
-                window.location.href="./login0.html";
+              localStorage.setItem("allJsonLogin",null);
+              window.location.href="./login0.html";
 
             });
 

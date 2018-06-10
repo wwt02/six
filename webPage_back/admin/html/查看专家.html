@@ -16,7 +16,7 @@
     <section id="body-content" class="layui-fluid">
         <div class="layui-main">
 			    <span class="layui-breadcrumb">
-                  <a href="专家信息.html">返回</a>
+                  <a id="oA1" href="" >返回</a>
 
 				  <a><cite>专家简介</cite></a>
 				</span>
@@ -31,7 +31,7 @@
             {{# if(d.data.headPic){ }}
             <img src="{{ d.data.headPic }}"/>
             {{#  }else{ }}
-            <img src="./../images/globe/defaultHeadPic.jpg"/>
+            <img src="./../images/002.gif"/>
             {{# } }}
 
         </figure>
@@ -64,7 +64,7 @@
 
 
 
-        var  id = sessionStorage.getItem("id");
+        var  id = sessionStorage.getItem("expertChaId");
 
         $.ajax({
             url:apiUrl+'/expert/'+id,
@@ -79,6 +79,12 @@
                 });
 
             }
+        });
+
+
+        $("#oA1").click(function () {
+
+            window.close();
         });
 
     });
