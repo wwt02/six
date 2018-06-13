@@ -82,11 +82,11 @@
 
  <script type="text/html" id="barDing">
 
-     {{#  if(d.stick === "置顶"&& d.status !== "审核未通过"){ }}
+     {{#  if(d.stick === "置顶"&& d.status !== "审核未通过" && d.status !== "待审核"){ }}
      <a class="layui-btn layui-btn-normal layui-btn-xs"    lay-event="cancel">取消置顶</a>
 
      {{#  } }}
-     {{#  if(d.stick !== "置顶"&&  d.status !== "审核未通过"){ }}
+     {{#  if(d.stick !== "置顶"&&  d.status !== "审核未通过"  && d.status !== "待审核"){ }}
      <a class="layui-btn layui-btn-warm layui-btn-xs"    lay-event="movetop">置顶数据</a>
 
      {{#  } }}
